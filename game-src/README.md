@@ -1,8 +1,16 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Project layout
+- \public
+  - These are the non-code files, such as images and sound.
+- \src
+  - These are the components and stylesheets
+  - Component tree:
+    - App
+      - Inventory
+        - TechTree
+        - InfoPane
+        - BuyPlantPanel
+        - BuyResourcePanel
+        - Profit
+      - Grid
+        - Cell
+      - Messages
