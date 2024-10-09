@@ -14,3 +14,12 @@
       - Grid
         - Cell
       - Messages
+
+## Running 
+After cloning
+```
+cd game-src
+npm install
+npm run dev
+```
+To see the development build running in the browser.
