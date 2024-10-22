@@ -20,11 +20,12 @@ export function getRandomNums(n, from, to){
 
 export function calculatePayment(houses, offices, modifier, demandFulfilledPercent) {
   demandFulfilledPercent = Math.min(1, demandFulfilledPercent);
-  return (houses * 50 + offices * 100) * modifier * demandFulfilledPercent;
+  return Math.floor((houses * 50 + offices * 100) * modifier * demandFulfilledPercent);
 }
 
-export function calculateRunningCost(plants) {
-  return plants.reduce((acc, plant) => acc + plant.runningCost, 0);
+export function calculateRunningCost(plants, modifier) {
+  console.log(modifier)
+  return Math.floor(plants.reduce((acc, plant) => acc + plant.runningCost, 0) * modifier);
 }
 
 /**

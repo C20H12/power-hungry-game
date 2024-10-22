@@ -30,6 +30,8 @@ export default (state, { type, payload }) => {
           ...state.playerStats,
           money: state.playerStats.money + payload.cost * 0.5,
           plants: state.playerStats.plants.filter(plant => plant.id !== payload.id),
+          output: state.playerStats.output - payload.output,
+          co2: state.playerStats.co2 - payload.co2,
         },
       };
     case "upgrade-house":
@@ -39,9 +41,9 @@ export default (state, { type, payload }) => {
           ...state.playerStats,
           demand: state.playerStats.demand + 10,
           money: state.playerStats.money - 1000,
-          houseCount: state.houseCount - 1,
-          officeCount: state.officeCount + 1,
         },
+        houseCount: state.houseCount - 1,
+        officeCount: state.officeCount + 1,
       };
     case "get-paid": {
       return {
@@ -60,11 +62,13 @@ export default (state, { type, payload }) => {
       };
     }
     case "pay-running-cost":
+      console.log(state.playerStats.plants, state.costModifier)
       return {
         ...state,
         playerStats: {
           ...state.playerStats,
-          money: state.playerStats.money - calculateRunningCost(state.playerStats.plants),
+          money: state.playerStats.money - 
+          calculateRunningCost(state.playerStats.plants, state.costModifier),
         },
       };
     case "grow-population": 
@@ -72,7 +76,7 @@ export default (state, { type, payload }) => {
         ...state,
         playerStats: {
           ...state.playerStats,
-          demand: state.playerStats.demand + 10,
+          demand: state.playerStats.demand + payload,
         },
       };
 

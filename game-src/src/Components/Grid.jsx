@@ -1,31 +1,18 @@
-import { useEffect, useState } from "react";
-import { getRandomNums, randint } from "../functions/utils";
+import { useState } from "react";
 import BuyMenu from "./BuyMenu";
 
 function Grid({
   allPlants,
   availablePlants,
   money,
+  gridState,
   buyPlantHandler,
   sellPlantHandler,
   upgradeHouseHandler,
-  populationGrowInterval,
-  populationGrowHandler,
-  popupShown,
+  setGridStateTo,
   upgradeHouseCost = 1000,
 }) {
-  const [gridState, setGridState] = useState(() => {
-    const grid = [];
-    const initHouses = getRandomNums(10, 0, 100);
-    for (let index = 0; index < 10; index++) {
-      grid.push(
-        Array(10)
-          .fill(null)
-          .map((_, i) => (initHouses.includes(index * 10 + i + 1) ? "house" : null))
-      );
-    }
-    return grid;
-  });
+
 
   const [selectedCell, setSelectedCell] = useState(null);
   const [menuType, setMenuType] = useState(null);
@@ -52,31 +39,6 @@ function Grid({
     setMenuType(null);
   };
 
-  const setGridStateTo = (pos, newValue) => {
-    setGridState(prev => {
-      const newGrid = [...prev];
-      newGrid[pos[0]][pos[1]] = newValue;
-      return newGrid;
-    });
-  };
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (popupShown) return;
-      const toAdd = 3;
-      for (let index = 0; index < toAdd; index++) {
-        const x = randint(0, 9);
-        const y = randint(0, 9);
-        if (gridState[x][y] === null) {
-          setGridStateTo([x, y], "house");
-          populationGrowHandler();
-        }
-      }
-    }, populationGrowInterval * 1000);
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, []);
 
 
   const playClickSound = () => {

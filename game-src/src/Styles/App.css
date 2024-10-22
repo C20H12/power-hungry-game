@@ -78,6 +78,13 @@ body {
   border: 1px solid black;
   width: 230px;
 }
+.info-entry.time {
+  position: absolute;
+  right: 10px;
+  top: 50px;
+  border: 1px solid black;
+  width: 230px;
+}
 .info-entry {
   display: flex;
   align-items: center;
