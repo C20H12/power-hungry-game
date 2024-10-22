@@ -75,6 +75,17 @@ export default (state, { type, payload }) => {
           demand: state.playerStats.demand + 10,
         },
       };
+
+    case "debug-unlock":
+      return {
+        ...state,
+        availablePlants: Array(100).fill(null).map((_, i) => i),
+        availableUpgrades: Array(100).fill(null).map((_, i) => i),
+        playerStats: {
+          ...state.playerStats,
+          money: state.playerStats.money + 999999,
+        },
+      };
     default:
       return state;
   }

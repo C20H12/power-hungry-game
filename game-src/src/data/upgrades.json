@@ -8,7 +8,7 @@
       "value": 0.95
     },
     "cost": 10000,
-    "image": "dum.jpg"
+    "image": "R&D_Lv1.jpg"
   },
   {
     "id": 2,
@@ -19,7 +19,7 @@
       "value": 0.9
     },
     "cost": 50000,
-    "image": "dum.jpg"
+    "image": "R&D_Lv2.jpg"
   },
   {
     "id": 3,
@@ -30,7 +30,7 @@
       "value": 0.8
     },
     "cost": 150000,
-    "image": "dum.jpg"
+    "image": "R&D_Lv3.jpg"
   },
   {
     "id": 4,
@@ -41,7 +41,7 @@
       "value": 1.5
     },
     "cost": 25000,
-    "image": "dum.jpg"
+    "image": "Efficiency_Lv1.jpg"
   },
   {
     "id": 5,
@@ -52,7 +52,7 @@
       "value": 2.0
     },
     "cost": 75000,
-    "image": "dum.jpg"
+    "image": "Efficiency_Lv2.jpg"
   },
   {
     "id": 6,
@@ -63,7 +63,7 @@
       "value": 0.9
     },
     "cost": 100000,
-    "image": "dum.jpg"
+    "image": "Conscience_Lv1.jpg"
   },
   {
     "id": 7,
@@ -74,7 +74,7 @@
       "value": 0.75
     },
     "cost": 200000,
-    "image": "dum.jpg"
+    "image": "Conscience_Lv2.jpg"
   },
   {
     "id": 8,
@@ -85,7 +85,7 @@
       "value": 48
     },
     "cost": 150000,
-    "image": "dum.jpg"
+    "image": "Faster_Bank_Lv1.jpg"
   },
   {
     "id": 9,
@@ -96,7 +96,7 @@
       "value": 36
     },
     "cost": 250000,
-    "image": "dum.jpg"
+    "image": "Faster_Bank_Lv2.jpg"
   },
   {
     "id": 10,
@@ -104,6 +104,6 @@
     "effect": {},
     "description": "Society becomes very smart",
     "cost": 500000,
-    "image": "dum.jpg"
+    "image": "Advanced_Tech.jpg"
   }
 ]

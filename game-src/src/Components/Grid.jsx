@@ -78,6 +78,12 @@ function Grid({
     };
   }, []);
 
+
+  const playClickSound = () => {
+    const audio = new Audio("/sound/click-2.mp3");
+    audio.play().catch(() => console.log("didn't play sound"))
+  }
+
   return (
     <>
       <div className="grid-wrapper">
@@ -87,7 +93,10 @@ function Grid({
               className="grid-cell"
               key={"" + i + j}
               data-coord={`${i},${j}`}
-              onClick={e => handleCellClick(i, j, e.target)}
+              onClick={e => {
+                handleCellClick(i, j, e.target)
+                playClickSound()
+              }}
             >
               {col === "house" && <img src="/assets/house.png" alt="House" />}
               {col === "office" && <img src="/assets/office.png" alt="Office" />}

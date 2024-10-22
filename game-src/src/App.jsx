@@ -68,7 +68,6 @@ function App() {
     }
     
     const intervalId = setInterval(() => {
-      console.log(1)
       dispatch({ type: "pay-running-cost" });
       setShowRunningCostWindow(true);
     }, 1000 * state.runningCostInterval);
@@ -122,6 +121,10 @@ function App() {
           closeFunc={() => setShowRunningCostWindow(false)}
         />
       }
+      <button onClick={() => dispatch({type: 'debug-unlock'})}>asdf</button>
+      <button onClick={() => {
+        new Audio('/sound/HYP - Miracle.mp3').play()
+      }}>music</button>
     </>
   );
 }
