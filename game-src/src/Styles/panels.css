@@ -1,0 +1,56 @@
+.buy-items {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  width: 600px;
+  height: 500px;
+  overflow-y: auto;
+}
+.buy-items h2 {
+  text-align: center;
+}
+.buy-items>div {
+  display: grid;
+  grid-template-columns: auto;
+}
+.buy-items .close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: .3fr .3fr 1.1fr;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  width: 90%;
+  margin: 10px auto;
+}
+.item h3 {
+  border-right: 1px solid #ccc;
+}
+.item p {
+  padding: 10px;
+}
+.item img.icon {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+.item button{
+  padding: 5px;
+  grid-column-start: 1;
+  grid-column-end: 4;
+}

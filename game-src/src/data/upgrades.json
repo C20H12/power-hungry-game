@@ -1,0 +1,109 @@
+[
+  {
+    "id": 1,
+    "name": "R&D Lv1.",
+    "description": "'Research and Development' into power sources",
+    "effect": {
+      "toChange": "costModifier",
+      "value": 0.95
+    },
+    "cost": 10000,
+    "image": "dum.jpg"
+  },
+  {
+    "id": 2,
+    "name": "R&D Lv2",
+    "description": "Putting more 'Research and Development' into power sources",
+    "effect": {
+      "toChange": "costModifier",
+      "value": 0.9
+    },
+    "cost": 50000,
+    "image": "dum.jpg"
+  },
+  {
+    "id": 3,
+    "name": "R&D Lv3",
+    "description": "All the scientists are putting the most into 'R&D' into future power sources",
+    "effect": {
+      "toChange": "costModifier",
+      "value": 0.8
+    },
+    "cost": 150000,
+    "image": "dum.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Efficiency Lv1",
+    "description": "Evolve your tech, and make more money",
+    "effect": {
+      "toChange": "payModifier",
+      "value": 1.5
+    },
+    "cost": 25000,
+    "image": "dum.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Efficiency Lv2",
+    "description": "Advance your tech, and make more money",
+    "effect": {
+      "toChange": "payModifier",
+      "value": 2.0
+    },
+    "cost": 75000,
+    "image": "dum.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Concience Lv1",
+    "description": "You develop a more ecologically friendly mindset, less CO2 will be emitted",
+    "effect": {
+      "toChange": "co2Modifier",
+      "value": 0.9
+    },
+    "cost": 100000,
+    "image": "dum.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Conscience Lv2",
+    "description": "Your mindset is every ecological, very demure. Less CO2 will be emitted",
+    "effect": {
+      "toChange": "co2Modifier",
+      "value": 0.75
+    },
+    "cost": 200000,
+    "image": "dum.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Faster Bank Lv1",
+    "description": "You're making bank, but do not receive it fast enough. You urge the bank!",
+    "effect": {
+      "toChange": "payInterval",
+      "value": 48
+    },
+    "cost": 150000,
+    "image": "dum.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Faster Bank Lv2",
+    "description": "Your money count is only getting higher, urge the bank some more.",
+    "effect": {
+      "toChange": "payInterval",
+      "value": 36
+    },
+    "cost": 250000,
+    "image": "dum.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Advanced Tech",
+    "effect": {},
+    "description": "Society becomes very smart",
+    "cost": 500000,
+    "image": "dum.jpg"
+  }
+]
