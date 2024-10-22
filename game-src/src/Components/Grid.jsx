@@ -1,15 +1,17 @@
-import { useState } from "react";
-import { getRandomNums } from "../functions/utils";
+import { useEffect, useState } from "react";
+import { getRandomNums, randint } from "../functions/utils";
 import BuyMenu from "./BuyMenu";
 
 function Grid({
   allPlants,
   availablePlants,
-  playerPlants,
   money,
   buyPlantHandler,
   sellPlantHandler,
   upgradeHouseHandler,
+  populationGrowInterval,
+  populationGrowHandler,
+  popupShown,
   upgradeHouseCost = 1000,
 }) {
   const [gridState, setGridState] = useState(() => {
@@ -58,6 +60,24 @@ function Grid({
     });
   };
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (popupShown) return;
+      const toAdd = 3;
+      for (let index = 0; index < toAdd; index++) {
+        const x = randint(0, 9);
+        const y = randint(0, 9);
+        if (gridState[x][y] === null) {
+          setGridStateTo([x, y], "house");
+          populationGrowHandler();
+        }
+      }
+    }, populationGrowInterval * 1000);
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
   return (
     <>
       <div className="grid-wrapper">
@@ -85,7 +105,7 @@ function Grid({
               closeFunc={closeMenu}
               itemList={allPlants}
               availableItemList={availablePlants}
-              ownedItemList={playerPlants}
+              ownedItemList={[]}
               money={money}
               buyHandler={item => {
                 buyPlantHandler(item);

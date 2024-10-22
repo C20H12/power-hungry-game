@@ -18,6 +18,14 @@ export function getRandomNums(n, from, to){
   return arr;
 };
 
+export function calculatePayment(houses, offices, modifier, demandFulfilledPercent) {
+  demandFulfilledPercent = Math.min(1, demandFulfilledPercent);
+  return (houses * 50 + offices * 100) * modifier * demandFulfilledPercent;
+}
+
+export function calculateRunningCost(plants) {
+  return plants.reduce((acc, plant) => acc + plant.runningCost, 0);
+}
 
 /**
  * Function that gets a boolean by a percentage chance

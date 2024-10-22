@@ -84,7 +84,7 @@ body {
   margin-bottom: 10px;
   position: relative;
 }
-.info-entry span {
+.info-entry span.unit {
   margin-left: 10px;
 }
 .info-entry img.icon {
@@ -106,7 +106,7 @@ body {
   height: 20px;
   background: linear-gradient(to right, #a5ffc3 0%, #ffec96 45%, #ff8383 100%);
   background-size: 300px 100%;
-  text-align: center;
+  text-align: left;
   line-height: 20px;
   color: rgb(0, 0, 0);
   border-radius: 5px;

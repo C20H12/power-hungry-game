@@ -4,8 +4,8 @@
     "name": "Level 1 Coal",
     "cost": 1000,
     "co2": 20,
-    "runningCost": 5,
-    "out": 10,
+    "runningCost": 50,
+    "output": 10,
     "image": "Coal1.png",
     "description": "Basic coal power plant with moderate CO2 emissions."
   },
@@ -14,28 +14,28 @@
     "name": "Level 2 Coal",
     "cost": 5000,
     "co2": 40,
-    "runningCost": 10,
-    "out": 35,
+    "runningCost": 100,
+    "output": 35,
     "image": "Coal2.png",
-    "description": "Intermediate coal power plant with higher output and CO2 emissions."
+    "description": "Intermediate coal power plant with higher outputput and CO2 emissions."
   },
   {
     "id": 3,
     "name": "Level 3 Coal",
     "cost": 8000,
     "co2": 80,
-    "runningCost": 15,
-    "out": 45,
+    "runningCost": 150,
+    "output": 45,
     "image": "Coal2.png",
-    "description": "Advanced coal power plant with high output and CO2 emissions."
+    "description": "Advanced coal power plant with high outputput and CO2 emissions."
   },
   {
     "id": 4,
     "name": "Level 1 Oil",
     "cost": 2500,
     "co2": 15,
-    "runningCost": 8,
-    "out": 20,
+    "runningCost": 80,
+    "output": 20,
     "image": "Oil1.png",
     "description": "Basic oil power plant with moderate CO2 emissions."
   },
@@ -44,28 +44,28 @@
     "name": "Level 2 Oil",
     "cost": 7000,
     "co2": 35,
-    "runningCost": 14,
-    "out": 55,
+    "runningCost": 140,
+    "output": 55,
     "image": "Oil2.png",
-    "description": "Intermediate oil power plant with higher output and CO2 emissions."
+    "description": "Intermediate oil power plant with higher outputput and CO2 emissions."
   },
   {
     "id": 6,
     "name": "Level 3 Oil",
     "cost": 10000,
     "co2": 70,
-    "runningCost": 20,
-    "out": 75,
+    "runningCost": 200,
+    "output": 75,
     "image": "Oil.png",
-    "description": "Advanced oil power plant with high output and CO2 emissions."
+    "description": "Advanced oil power plant with high outputput and CO2 emissions."
   },
   {
     "id": 7,
     "name": "Level 1 Hydroelectric",
     "cost": 15000,
     "co2": 5,
-    "runningCost": 10,
-    "out": 20,
+    "runningCost": 100,
+    "output": 20,
     "image": "Hydro1.png",
     "description": "Basic hydroelectric power plant with low CO2 emissions."
   },
@@ -74,28 +74,28 @@
     "name": "Level 2 Hydroelectric",
     "cost": 25000,
     "co2": 10,
-    "runningCost": 20,
-    "out": 50,
+    "runningCost": 200,
+    "output": 50,
     "image": "Hydro2.png",
-    "description": "Intermediate hydroelectric power plant with higher output and low CO2 emissions."
+    "description": "Intermediate hydroelectric power plant with higher outputput and low CO2 emissions."
   },
   {
     "id": 9,
     "name": "Level 3 Hydroelectric",
     "cost": 40000,
     "co2": 15,
-    "runningCost": 35,
-    "out": 70,
+    "runningCost": 350,
+    "output": 70,
     "image": "Hydro2.png",
-    "description": "Advanced hydroelectric power plant with high output and low CO2 emissions."
+    "description": "Advanced hydroelectric power plant with high outputput and low CO2 emissions."
   },
   {
     "id": 10,
     "name": "Level 1 Wind",
     "cost": 20000,
     "co2": 2,
-    "runningCost": 20,
-    "out": 25,
+    "runningCost": 200,
+    "output": 25,
     "image": "Wind1.png",
     "description": "Basic wind power plant with very low CO2 emissions."
   },
@@ -104,28 +104,28 @@
     "name": "Level 2 Wind",
     "cost": 35000,
     "co2": 5,
-    "runningCost": 40,
-    "out": 40,
+    "runningCost": 400,
+    "output": 40,
     "image": "Wind2.png",
-    "description": "Intermediate wind power plant with higher output and very low CO2 emissions."
+    "description": "Intermediate wind power plant with higher outputput and very low CO2 emissions."
   },
   {
     "id": 12,
     "name": "Level 3 Wind",
     "cost": 50000,
     "co2": 10,
-    "runningCost": 55,
-    "out": 80,
+    "runningCost": 550,
+    "output": 80,
     "image": "Wind2.png",
-    "description": "Advanced wind power plant with high output and very low CO2 emissions."
+    "description": "Advanced wind power plant with high outputput and very low CO2 emissions."
   },
   {
     "id": 13,
     "name": "Level 1 Solar",
     "cost": 25000,
     "co2": 1,
-    "runningCost": 45,
-    "out": 20,
+    "runningCost": 450,
+    "output": 20,
     "image": "Solar1.png",
     "description": "Basic solar power plant with minimal CO2 emissions."
   },
@@ -134,28 +134,28 @@
     "name": "Level 2 Solar",
     "cost": 40000,
     "co2": 2,
-    "runningCost": 75,
-    "out": 30,
+    "runningCost": 750,
+    "output": 30,
     "image": "Solar2.png",
-    "description": "Intermediate solar power plant with higher output and minimal CO2 emissions."
+    "description": "Intermediate solar power plant with higher outputput and minimal CO2 emissions."
   },
   {
     "id": 15,
     "name": "Level 3 Solar",
     "cost": 45000,
     "co2": 3,
-    "runningCost": 90,
-    "out": 40,
+    "runningCost": 900,
+    "output": 40,
     "image": "Solar2.png",
-    "description": "Advanced solar power plant with high output and minimal CO2 emissions."
+    "description": "Advanced solar power plant with high outputput and minimal CO2 emissions."
   },
   {
     "id": 16,
     "name": "Level 1 Fission",
     "cost": 45000,
     "co2": 3,
-    "runningCost": 90,
-    "out": 40,
+    "runningCost": 900,
+    "output": 40,
     "image": "Solar2.png",
     "description": "Basic fission power plant with minimal CO2 emissions."
   },
@@ -164,18 +164,18 @@
     "name": "Level 2 Fission",
     "cost": 45000,
     "co2": 3,
-    "runningCost": 90,
-    "out": 40,
+    "runningCost": 900,
+    "output": 40,
     "image": "Solar2.png",
-    "description": "Intermediate fission power plant with higher output and minimal CO2 emissions."
+    "description": "Intermediate fission power plant with higher outputput and minimal CO2 emissions."
   },
   {
     "id": 18,
     "name": "Level 1 Fusion",
     "cost": 45000,
     "co2": 3,
-    "runningCost": 90,
-    "out": 40,
+    "runningCost": 900,
+    "output": 40,
     "image": "Solar2.png",
     "description": "Basic fusion power plant with minimal CO2 emissions."
   },
@@ -184,9 +184,9 @@
     "name": "Level 2 Fusion",
     "cost": 45000,
     "co2": 3,
-    "runningCost": 90,
-    "out": 40,
+    "runningCost": 900,
+    "output": 40,
     "image": "Solar2.png",
-    "description": "Intermediate fusion power plant with higher output and minimal CO2 emissions."
+    "description": "Intermediate fusion power plant with higher outputput and minimal CO2 emissions."
   }
 ]
