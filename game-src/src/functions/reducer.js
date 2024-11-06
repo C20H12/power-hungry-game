@@ -45,6 +45,16 @@ export default (state, { type, payload }) => {
         houseCount: state.houseCount - 1,
         officeCount: state.officeCount + 1,
       };
+    case "unlock-tile":
+      return {
+        ...state,
+        playerStats: {
+          ...state.playerStats,
+          money: state.playerStats.money - payload,
+        }
+      }
+    
+      // periodic events
     case "get-paid": {
       return {
         ...state,
@@ -71,14 +81,17 @@ export default (state, { type, payload }) => {
           calculateRunningCost(state.playerStats.plants, state.costModifier),
         },
       };
-    case "grow-population": 
+    case "grow-population": {
+      const demandAdd = payload < 0 ? 0 : payload;
       return {
         ...state,
         playerStats: {
           ...state.playerStats,
-          demand: state.playerStats.demand + payload,
+          demand: state.playerStats.demand + demandAdd,
+          population: state.playerStats.population + payload,
         },
       };
+    }
 
     case "debug-unlock":
       return {

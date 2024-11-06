@@ -44,6 +44,9 @@ body {
 .grid-cell img.grid-house-empty {
   filter: grayscale(100%);
 }
+.grid-cell.cell-locked {
+  filter: contrast(15%) blur(1px);
+}
 
 .grid-cell:hover {
   background-color: #0f0;

@@ -67,7 +67,8 @@
     "runningCost": 100,
     "output": 20,
     "image": "Hydro1.png",
-    "description": "Basic hydroelectric power plant with low CO2 emissions."
+    "description": "Basic hydroelectric power plant with low CO2 emissions.",
+    "tip": "(water tiles only)"
   },
   {
     "id": 8,
@@ -77,7 +78,8 @@
     "runningCost": 200,
     "output": 50,
     "image": "Hydro2.png",
-    "description": "Intermediate hydroelectric power plant with higher outputput and low CO2 emissions."
+    "description": "Intermediate hydroelectric power plant with higher outputput and low CO2 emissions.",
+    "tip": "(water tiles only)"
   },
   {
     "id": 9,
@@ -87,7 +89,8 @@
     "runningCost": 350,
     "output": 70,
     "image": "Hydro2.png",
-    "description": "Advanced hydroelectric power plant with high outputput and low CO2 emissions."
+    "description": "Advanced hydroelectric power plant with high outputput and low CO2 emissions.",
+    "tip": "(water tiles only)"
   },
   {
     "id": 10,
@@ -97,7 +100,8 @@
     "runningCost": 200,
     "output": 25,
     "image": "Wind1.png",
-    "description": "Basic wind power plant with very low CO2 emissions."
+    "description": "Basic wind power plant with very low CO2 emissions.",
+    "tip": "(usually placed on top of hills for optimal operation)"
   },
   {
     "id": 11,
@@ -107,7 +111,8 @@
     "runningCost": 400,
     "output": 40,
     "image": "Wind2.png",
-    "description": "Intermediate wind power plant with higher outputput and very low CO2 emissions."
+    "description": "Intermediate wind power plant with higher outputput and very low CO2 emissions.",
+    "tip": "(usually placed on top of hills for optimal operation)"
   },
   {
     "id": 12,
@@ -117,7 +122,8 @@
     "runningCost": 550,
     "output": 80,
     "image": "Wind2.png",
-    "description": "Advanced wind power plant with high outputput and very low CO2 emissions."
+    "description": "Advanced wind power plant with high outputput and very low CO2 emissions.",
+    "tip": "(usually placed on top of hills for optimal operation)"
   },
   {
     "id": 13,

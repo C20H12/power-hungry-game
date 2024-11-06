@@ -10,23 +10,27 @@ function Grid({
   buyPlantHandler,
   sellPlantHandler,
   upgradeHouseHandler,
+  unlockTileHandler,
   setGridStateTo,
   upgradeHouseCost = 1000,
 }) {
 
-
+  // stores the selected cell's coordinates
   const [selectedCell, setSelectedCell] = useState(null);
+  // stores the type of menu to show
   const [menuType, setMenuType] = useState(null);
-
+  // stores the position of the menu in px, in screen space
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
 
   const handleCellClick = (i, j, cellElement) => {
-    const cell = gridState[i][j].value;
-    if (cell === null) {
+    const cell = gridState[i][j];
+    if (cell.locked) {
+      setMenuType("lock");
+    } else if (cell.value === null) {
       setMenuType("buy");
-    } else if (cell === "house") {
+    } else if (cell.value === "house") {
       setMenuType("upgrade");
-    } else if (cell.id != null) {
+    } else if (cell.value.id != null) {
       setMenuType("sell");
     }
     setSelectedCell([i, j]);
@@ -54,7 +58,7 @@ function Grid({
         {gridState.map((row, i) =>
           row.map((col, j) => (
             <div
-              className="grid-cell"
+              className={(gridState[i][j].locked ? "cell-locked " : "") + "grid-cell"}
               key={"" + i + j}
               data-coord={`${i},${j}`}
               onClick={e => {
@@ -64,7 +68,6 @@ function Grid({
               style={col.value == null ? {backgroundImage: `url(/assets/tiles/${col.bg}.png)`} : {}}
             >
               {col.value === "house" && <img src="/assets/house.png" alt="House" />}
-              {col.value === "house-empty" && <img className="grid-house-empty" src="/assets/house.png" alt="House" />}
               {col.value === "office" && <img src="/assets/office.png" alt="Office" />}
               {typeof col.value !== "string" && col.value != null && <img src={"/assets/" + col.value.image} alt="Plant" />}
             </div>
@@ -80,11 +83,25 @@ function Grid({
               closeFunc={closeMenu}
               itemList={allPlants}
               availableItemList={availablePlants}
-              ownedItemList={[]}
+              ownedItemList={
+                // make the hydro plant only available on water, others not available
+                gridState[selectedCell[0]][selectedCell[1]].bg === "rive" ?
+                Array(19).fill(null).map((_, i) => ({id: i})).filter(item => ![7, 8, 9].includes(item.id))
+                : [{id: 7}, {id: 8}, {id: 9}]
+              }
               money={money}
               buyHandler={item => {
-                buyPlantHandler(item);
-                setGridStateTo(selectedCell, item);
+                let item1 = item;
+                // bonus power for wind on hill tile
+                if (item.name.includes("Wind")) {
+                  if (gridState[selectedCell[0]][selectedCell[1]].bg === "hill") {
+                    item1 = {...item, output: item.output + 10}
+                  } else {
+                    item1 = {...item, output: item.output - 10}
+                  }
+                }
+                buyPlantHandler(item1);
+                setGridStateTo(selectedCell, item1);
                 closeMenu();
               }}
             />
@@ -102,7 +119,7 @@ function Grid({
               <button
                 disabled={money < upgradeHouseCost} // Example cost for upgrade
                 onClick={() => {
-                  upgradeHouseHandler(selectedCell);
+                  upgradeHouseHandler();
                   setGridStateTo(selectedCell, "office");
                   closeMenu();
                 }}
@@ -133,6 +150,28 @@ function Grid({
                 Confirm
               </button>
               <button onClick={closeMenu}>Cancel</button>
+            </div>
+          )}
+          {menuType === "lock" && (
+            <div
+              className="grid-menu"
+              style={{
+                top: `${menuPosition.top}px`,
+                left: `${menuPosition.left}px`,
+              }}
+            >
+              <h3>Locked</h3>
+              <p>Unlock this area? Costs ${100 + 50 * gridState.flat().filter(cell => !cell.locked).length}</p>
+              <button
+                onClick={() => {
+                  // price is higher when more tiles are unlocked
+                  const price = 100 + 50 * gridState.flat().filter(cell => !cell.locked).length;
+                  unlockTileHandler(price);
+                  setGridStateTo(selectedCell, null, true);
+                  closeMenu();
+                }}
+              >Confirm</button>
+              <button onClick={closeMenu}>Close</button>
             </div>
           )}
         </div>

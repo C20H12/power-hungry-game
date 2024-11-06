@@ -44,6 +44,10 @@
 .item p {
   padding: 10px;
 }
+.item p span {
+  text-decoration: underline;
+  color: blue;
+}
 .item img.icon {
   width: 100px;
   height: 100px;

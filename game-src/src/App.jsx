@@ -18,19 +18,20 @@ import { calculatePayment, calculateRunningCost, randint } from "./functions/uti
 function App() {
   const initialWorld = {
     playerStats: {
-      money: 10000,
+      money: 2000,
+      population: 100,
       output: 0,
       demand: 10,
       co2: 0,
       upgrades: [], // stores objects
       plants: [],
     },
-    costModifier: 1,
-    payModifier: 1,
+    costModifier: 1, // running cost multiplier
+    payModifier: 1, // pay out
     outputModifier: 1,
     co2Modifier: 1,
-    availablePlants: [1, 4], // stores ids of unlocked
-    availableUpgrades: [1, 4],
+    availablePlants: [1], // stores ids of unlocked
+    availableUpgrades: [1],
     runningCostInterval: 20,
     payInterval: 30,
     demandGrowInterval: 15,
@@ -41,7 +42,7 @@ function App() {
 
   const [state, dispatch] = useReducer(reducer, initialWorld);
 
-  // initialize grid state using the wfc library
+  // initialize grid state using the random maps in maps.json
   const [gridState, setGridState] = useState(() => {
     const pickedMap = allMaps[randint(0, allMaps.length - 1)];
     const grid = [];
@@ -53,21 +54,27 @@ function App() {
             return {
               value: null,
               bg: pickedMap[index][i],
-              locked: true
+              locked: true,
+              hasPower: false
             };
           })
       );
     }
+    grid[0][0].locked = false;
+    grid[0][1].locked = false;
+    grid[1][0].locked = false;
+    grid[1][1].locked = false;
+    grid[1][1].value = "house";
     return grid;
   });
 
-  const DAY_INTERVAL = 999;
+  const [DAY_INTERVAL, setDAY_INTERVAL] = useState(999);
 
   const [showProfitWindow, setShowProfitWindow] = useState(false);
   const [showRunningCostWindow, setShowRunningCostWindow] = useState(false);
   const [showPopulationChangeWindow, setShowPopulationChangeWindow] = useState(false);
   const [days, setDays] = useState(1);
-  const [demandGrowthAmount, setDemandGrowthAmount] = useState(1);
+  const [demandGrowthAmount, setDemandGrowthAmount] = useState(10);
 
   useEffect(() => {
     if (showProfitWindow || showRunningCostWindow || showPopulationChangeWindow) return;
@@ -77,7 +84,7 @@ function App() {
     return () => {
       clearInterval(intervalId);
     };
-  }, [showProfitWindow, showRunningCostWindow, showPopulationChangeWindow]);
+  }, [showProfitWindow, showRunningCostWindow, showPopulationChangeWindow, DAY_INTERVAL]);
 
   useEffect(() => {
     // only show when started producing power
@@ -107,58 +114,51 @@ function App() {
   useEffect(() => {
     if (
       days === 0 ||
-      days % state.demandGrowInterval !== 0 ||
-      state.playerStats.output < state.playerStats.demand
+      days % state.demandGrowInterval !== 0
     )
       return;
 
-    const toAdd = 3;
+    // decreasing will run even if demand is not met
     if (demandGrowthAmount < 0) {
-      dispatch({ type: "grow-population", payload: demandGrowthAmount * toAdd });
+      dispatch({ type: "grow-population", payload: demandGrowthAmount });
       setShowPopulationChangeWindow(true);
-      // setGridState(gr => {
-      //   const housesArr = gr.map((row, i) => row.map((cell, j) => cell === "house" ? [i, j] : null).filter(Boolean)).flat();
-      //   const toRemove = getRandomNums(toAdd, 0, housesArr.length - 1);
-      //   console.log(housesArr, toRemove);
-
-      //   const newGrid = [...gr];
-      //   toRemove.forEach(i => {
-      //     const [x, y] = housesArr[i];
-      //     newGrid[x][y] = "house-empty";
-      //   });
-      //   return newGrid;
-      // })
-
-      if (state.playerStats.demand < 0) {
+      if (state.playerStats.population < 0) {
         dispatch({ type: "game-over" }); // TODO: implement this
       }
       return;
     }
-    for (let index = 0; index < toAdd; index++) {
-      const x = randint(0, 9);
-      const y = randint(0, 9);
-      if (gridState[x][y] === null) {
-        setGridStateTo([x, y], "house");
-        dispatch({ type: "grow-population", payload: demandGrowthAmount });
-      }
+      
+    // only run when demand is met, to grow population
+    if (state.playerStats.output >= state.playerStats.demand) {
+      setShowPopulationChangeWindow(true);
+      dispatch({ type: "grow-population", payload: demandGrowthAmount });
     }
-    setShowPopulationChangeWindow(true);
+
   }, [days, state.demandGrowInterval]);
 
+  // set the growth amount in the next grow event
   useEffect(() => {
     if (state.playerStats.co2 >= state.co2Limit) {
-      setDemandGrowthAmount(-1);
+      setDemandGrowthAmount(-10);
     }
   }, [state.co2Limit, state.playerStats.co2]);
 
-  const setGridStateTo = (pos, newValue) => {
-    setGridState(prev => {
-      const newGrid = [...prev];
-      newGrid[pos[0]][pos[1]].value = newValue;
-      return newGrid;
-    });
+  const setGridStateTo = (pos, newValue, unlocking=false) => {
+    if (unlocking) {
+      setGridState(prev => {
+        const newGrid = [...prev];
+        newGrid[pos[0]][pos[1]].locked = false;
+        return newGrid;
+      });
+    } else {
+      setGridState(prev => {
+        const newGrid = [...prev];
+        newGrid[pos[0]][pos[1]].value = newValue;
+        return newGrid;
+      });
+    }
   };
-
+  
   return (
     <>
       <Info playerStats={state.playerStats} co2Limit={state.co2Limit} days={days} />
@@ -177,6 +177,7 @@ function App() {
         buyPlantHandler={payload => dispatch({ type: "buy-plant", payload })}
         sellPlantHandler={payload => dispatch({ type: "sell-plant", payload })}
         upgradeHouseHandler={() => dispatch({ type: "upgrade-house" })}
+        unlockTileHandler={payload => dispatch({ type: "unlock-tile", payload})}
         setGridStateTo={setGridStateTo}
       />
       {showProfitWindow && (
@@ -211,8 +212,8 @@ function App() {
           title="Population Change"
           text={
             demandGrowthAmount > 0
-              ? `Because of your excellent power services, population has increased by 3!`
-              : `Due to high CO2 emissions, population has decreased by 3!`
+              ? `Because of your excellent power services, population has increased by 10 people!`
+              : `Due to high CO2 emissions, population has decreased by 10 people!`
           }
           closeFunc={() => setShowPopulationChangeWindow(false)}
         />
@@ -230,7 +231,16 @@ function App() {
           new Audio("/sound/HYP - Criminal(Sound Effect Ver.).mp3").play();
         }}
       >
-        music
+        music2
+      </button>
+      <button onClick={() => setDAY_INTERVAL(0.5)}>
+        fast
+      </button>
+      <button onClick={() => setDAY_INTERVAL(2)}>
+        slow
+      </button>
+      <button onClick={() => setDAY_INTERVAL(1000)}>
+        stop
       </button>
     </>
   );
