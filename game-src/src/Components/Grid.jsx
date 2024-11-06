@@ -1,6 +1,7 @@
 import { useState } from "react";
 import BuyMenu from "./BuyMenu";
 
+
 function Grid({
   allPlants,
   availablePlants,
@@ -20,7 +21,7 @@ function Grid({
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
 
   const handleCellClick = (i, j, cellElement) => {
-    const cell = gridState[i][j];
+    const cell = gridState[i][j].value;
     if (cell === null) {
       setMenuType("buy");
     } else if (cell === "house") {
@@ -46,6 +47,7 @@ function Grid({
     audio.play().catch(() => console.log("didn't play sound"))
   }
 
+
   return (
     <>
       <div className="grid-wrapper">
@@ -59,10 +61,12 @@ function Grid({
                 handleCellClick(i, j, e.target)
                 playClickSound()
               }}
+              style={col.value == null ? {backgroundImage: `url(/assets/tiles/${col.bg}.png)`} : {}}
             >
-              {col === "house" && <img src="/assets/house.png" alt="House" />}
-              {col === "office" && <img src="/assets/office.png" alt="Office" />}
-              {typeof col !== "string" && col != null && <img src={"/assets/" + col.image} alt="Plant" />}
+              {col.value === "house" && <img src="/assets/house.png" alt="House" />}
+              {col.value === "house-empty" && <img className="grid-house-empty" src="/assets/house.png" alt="House" />}
+              {col.value === "office" && <img src="/assets/office.png" alt="Office" />}
+              {typeof col.value !== "string" && col.value != null && <img src={"/assets/" + col.value.image} alt="Plant" />}
             </div>
           ))
         )}
@@ -121,7 +125,7 @@ function Grid({
               <button
                 onClick={() => {
                   // for this menu to show up, assume the grid at i,j is a plant obj
-                  sellPlantHandler(gridState[selectedCell[0]][selectedCell[1]]);
+                  sellPlantHandler(gridState[selectedCell[0]][selectedCell[1]].value);
                   setGridStateTo(selectedCell, null);
                   closeMenu();
                 }}

@@ -9,10 +9,11 @@ import Upgrades from "./Components/Upgrades";
 
 import plants from "./data/plants.json";
 import upgrades from "./data/upgrades.json";
+import allMaps from "./data/maps.json";
 
 import reducer from "./functions/reducer";
 import PeriodicPopup from "./Components/PeriodicPopup";
-import { calculatePayment, calculateRunningCost, getRandomNums, randint } from "./functions/utils";
+import { calculatePayment, calculateRunningCost, randint } from "./functions/utils";
 
 function App() {
   const initialWorld = {
@@ -40,25 +41,32 @@ function App() {
 
   const [state, dispatch] = useReducer(reducer, initialWorld);
 
+  // initialize grid state using the wfc library
   const [gridState, setGridState] = useState(() => {
+    const pickedMap = allMaps[randint(0, allMaps.length - 1)];
     const grid = [];
-    const initHouses = getRandomNums(10, 0, 100);
     for (let index = 0; index < 10; index++) {
       grid.push(
         Array(10)
           .fill(null)
-          .map((_, i) => (initHouses.includes(index * 10 + i + 1) ? "house" : null))
+          .map((_, i) => {
+            return {
+              value: null,
+              bg: pickedMap[index][i],
+              locked: true
+            };
+          })
       );
     }
     return grid;
   });
 
-  const DAY_INTERVAL = 1;
+  const DAY_INTERVAL = 999;
 
   const [showProfitWindow, setShowProfitWindow] = useState(false);
   const [showRunningCostWindow, setShowRunningCostWindow] = useState(false);
   const [showPopulationChangeWindow, setShowPopulationChangeWindow] = useState(false);
-  const [days, setDays] = useState(0);
+  const [days, setDays] = useState(1);
   const [demandGrowthAmount, setDemandGrowthAmount] = useState(1);
 
   useEffect(() => {
@@ -97,18 +105,29 @@ function App() {
   }, [days, state.playerStats.plants, state.runningCostInterval]);
 
   useEffect(() => {
-    console.log(111)
     if (
       days === 0 ||
       days % state.demandGrowInterval !== 0 ||
       state.playerStats.output < state.playerStats.demand
     )
       return;
-    
+
     const toAdd = 3;
     if (demandGrowthAmount < 0) {
-      dispatch({ type: "grow-population", payload: demandGrowthAmount * toAdd});
+      dispatch({ type: "grow-population", payload: demandGrowthAmount * toAdd });
       setShowPopulationChangeWindow(true);
+      // setGridState(gr => {
+      //   const housesArr = gr.map((row, i) => row.map((cell, j) => cell === "house" ? [i, j] : null).filter(Boolean)).flat();
+      //   const toRemove = getRandomNums(toAdd, 0, housesArr.length - 1);
+      //   console.log(housesArr, toRemove);
+
+      //   const newGrid = [...gr];
+      //   toRemove.forEach(i => {
+      //     const [x, y] = housesArr[i];
+      //     newGrid[x][y] = "house-empty";
+      //   });
+      //   return newGrid;
+      // })
 
       if (state.playerStats.demand < 0) {
         dispatch({ type: "game-over" }); // TODO: implement this
@@ -120,7 +139,7 @@ function App() {
       const y = randint(0, 9);
       if (gridState[x][y] === null) {
         setGridStateTo([x, y], "house");
-        dispatch({ type: "grow-population", payload: demandGrowthAmount});
+        dispatch({ type: "grow-population", payload: demandGrowthAmount });
       }
     }
     setShowPopulationChangeWindow(true);
@@ -130,12 +149,12 @@ function App() {
     if (state.playerStats.co2 >= state.co2Limit) {
       setDemandGrowthAmount(-1);
     }
-  }, [state.co2Limit, state.playerStats.co2])
+  }, [state.co2Limit, state.playerStats.co2]);
 
   const setGridStateTo = (pos, newValue) => {
     setGridState(prev => {
       const newGrid = [...prev];
-      newGrid[pos[0]][pos[1]] = newValue;
+      newGrid[pos[0]][pos[1]].value = newValue;
       return newGrid;
     });
   };
@@ -181,7 +200,8 @@ function App() {
         <PeriodicPopup
           title="Running Cost Summary"
           text={`You paid $${calculateRunningCost(
-            state.playerStats.plants, state.costModifier
+            state.playerStats.plants,
+            state.costModifier
           )} for maintenance and resources needed to power your facilities.`}
           closeFunc={() => setShowRunningCostWindow(false)}
         />
@@ -190,10 +210,9 @@ function App() {
         <PeriodicPopup
           title="Population Change"
           text={
-            demandGrowthAmount > 0 ? 
-            `Because of your excellent power services, population has increased by 3!`
-            : 
-            `Due to high CO2 emissions, population has decreased by 3!`
+            demandGrowthAmount > 0
+              ? `Because of your excellent power services, population has increased by 3!`
+              : `Due to high CO2 emissions, population has decreased by 3!`
           }
           closeFunc={() => setShowPopulationChangeWindow(false)}
         />

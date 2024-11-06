@@ -41,6 +41,9 @@ body {
   max-width: 100%;
   max-height: 100%;
 }
+.grid-cell img.grid-house-empty {
+  filter: grayscale(100%);
+}
 
 .grid-cell:hover {
   background-color: #0f0;

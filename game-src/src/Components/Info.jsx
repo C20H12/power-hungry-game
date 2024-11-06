@@ -14,13 +14,6 @@ function Info(props) {
         <span>Day: {days}</span>
         <div className="description">Days since the beginning.</div>
       </div>
-      
-      <div className="info-entry">
-        <img src="/ui/ex-mark.jpg" alt="Demand Icon" className="icon" />
-        <span>{playerStats.demand}</span>
-        <span className="unit">Kw</span>
-        <div className="description">Current power demanded by the users.</div>
-      </div>
 
       <div className="info-entry">
         <img src="/ui/electric.jpg" alt="Electric Icon" className="icon" />
@@ -30,7 +23,7 @@ function Info(props) {
           </div>
           <span className="unit">Kw</span>
         </div>
-        <div className="description">Current power output from your plants.</div>
+        <div className="description">Current power output from your plants and the demand.</div>
       </div>
 
       <div className="info-entry">
