@@ -133,7 +133,8 @@
     "runningCost": 450,
     "output": 20,
     "image": "Solar1.png",
-    "description": "Basic solar power plant with minimal CO2 emissions."
+    "description": "Basic solar power plant with minimal CO2 emissions.",
+    "tip": "(usually placed on flat land for optimal operation)"
   },
   {
     "id": 14,
@@ -143,7 +144,8 @@
     "runningCost": 750,
     "output": 30,
     "image": "Solar2.png",
-    "description": "Intermediate solar power plant with higher outputput and minimal CO2 emissions."
+    "description": "Intermediate solar power plant with higher outputput and minimal CO2 emissions.",
+    "tip": "(usually placed on flat land for optimal operation)"
   },
   {
     "id": 15,
@@ -153,7 +155,8 @@
     "runningCost": 900,
     "output": 40,
     "image": "Solar2.png",
-    "description": "Advanced solar power plant with high outputput and minimal CO2 emissions."
+    "description": "Advanced solar power plant with high outputput and minimal CO2 emissions.",
+    "tip": "(usually placed on flat land for optimal operation)"
   },
   {
     "id": 16,

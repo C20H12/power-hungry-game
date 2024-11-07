@@ -104,6 +104,12 @@ function Grid({
                     item1 = {...item, output: item.output - 10}
                   }
                 }
+                // bonus power for solar on land
+                if (item.name.includes("Solar")) {
+                  if (gridState[selectedCell[0]][selectedCell[1]].bg === "land") {
+                    item1 = {...item, output: item.output + 15}
+                  }
+                }
                 buyPlantHandler(item1);
                 setGridState(prev => {
                   const newGrid = [...prev];
