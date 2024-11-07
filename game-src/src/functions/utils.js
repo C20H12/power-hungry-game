@@ -18,14 +18,26 @@ export function getRandomNums(n, from, to){
   return arr;
 };
 
-export function calculatePayment(houses, offices, modifier, demandFulfilledPercent) {
+// paytable is array of pairs (property count, property pay per unit)
+export function calculatePayment(payTable, modifier, demandFulfilledPercent) {
+  const total = payTable.reduce((acc, [count, pay]) => acc + count * pay, 0);
   demandFulfilledPercent = Math.min(1, demandFulfilledPercent);
-  return Math.floor((houses * 50 + offices * 100) * modifier * demandFulfilledPercent);
+  return Math.floor(total * modifier * demandFulfilledPercent);
 }
 
 export function calculateRunningCost(plants, modifier) {
-  console.log(modifier)
+  // console.log(modifier)
   return Math.floor(plants.reduce((acc, plant) => acc + plant.runningCost, 0) * modifier);
+}
+
+export function setAdjacentCellsPower(pos, grid, bool) {
+  for (let i = -1; i <= 1; i++) {
+    for (let j = -1; j <= 1; j++) {
+      if (grid[pos[0] + i] && grid[pos[0] + i][pos[1] + j]) {
+        grid[pos[0] + i][pos[1] + j].hasPower = bool;
+      }
+    }
+  }
 }
 
 /**

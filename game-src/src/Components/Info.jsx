@@ -18,7 +18,7 @@ function Info(props) {
       <div className="info-entry">
         <img src="/ui/ex-mark.jpg" alt="Demand Icon" className="icon" />
         <span>{playerStats.population}</span>
-        <span className="unit">Kw</span>
+        <span className="unit"></span>
         <div className="description">Current population in your city.</div>
       </div>
 

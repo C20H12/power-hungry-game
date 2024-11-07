@@ -1,17 +1,21 @@
 import { useState } from "react";
 import BuyMenu from "./BuyMenu";
+import { setAdjacentCellsPower } from "../functions/utils";
 
 
 function Grid({
   allPlants,
   availablePlants,
+
   money,
-  gridState,
+  
   buyPlantHandler,
   sellPlantHandler,
   upgradeHouseHandler,
   unlockTileHandler,
-  setGridStateTo,
+  
+  gridState,
+  setGridState,
   upgradeHouseCost = 1000,
 }) {
 
@@ -67,8 +71,8 @@ function Grid({
               }}
               style={col.value == null ? {backgroundImage: `url(/assets/tiles/${col.bg}.png)`} : {}}
             >
-              {col.value === "house" && <img src="/assets/house.png" alt="House" />}
-              {col.value === "office" && <img src="/assets/office.png" alt="Office" />}
+              {col.value === "house" && <img src={`/assets/house${col.hasPower ? "_power" : ""}.png`} alt="House" />}
+              {col.value === "office" && <img src={`/assets/office${col.hasPower ? "_power" : ""}.png`} alt="Office" />}
               {typeof col.value !== "string" && col.value != null && <img src={"/assets/" + col.value.image} alt="Plant" />}
             </div>
           ))
@@ -101,7 +105,13 @@ function Grid({
                   }
                 }
                 buyPlantHandler(item1);
-                setGridStateTo(selectedCell, item1);
+                setGridState(prev => {
+                  const newGrid = [...prev];
+                  newGrid[selectedCell[0]][selectedCell[1]].value = item1;
+                  // set the cell and 8 cells around it to powered
+                  setAdjacentCellsPower(selectedCell, newGrid, true); 
+                  return newGrid;
+                });
                 closeMenu();
               }}
             />
@@ -119,8 +129,12 @@ function Grid({
               <button
                 disabled={money < upgradeHouseCost} // Example cost for upgrade
                 onClick={() => {
-                  upgradeHouseHandler();
-                  setGridStateTo(selectedCell, "office");
+                  upgradeHouseHandler(gridState[selectedCell[0]][selectedCell[1]].hasPower ? 1 : 0);
+                  setGridState(prev => {
+                    const newGrid = [...prev];
+                    newGrid[selectedCell[0]][selectedCell[1]].value = "office";
+                    return newGrid;
+                  });
                   closeMenu();
                 }}
               >
@@ -143,7 +157,13 @@ function Grid({
                 onClick={() => {
                   // for this menu to show up, assume the grid at i,j is a plant obj
                   sellPlantHandler(gridState[selectedCell[0]][selectedCell[1]].value);
-                  setGridStateTo(selectedCell, null);
+                  setGridState(prev => {
+                    const newGrid = [...prev];
+                    newGrid[selectedCell[0]][selectedCell[1]].value = null;
+                    // set the cell and 8 cells around it to not powered
+                    setAdjacentCellsPower(selectedCell, newGrid, false);
+                    return newGrid;
+                  });
                   closeMenu();
                 }}
               >
@@ -167,7 +187,11 @@ function Grid({
                   // price is higher when more tiles are unlocked
                   const price = 100 + 50 * gridState.flat().filter(cell => !cell.locked).length;
                   unlockTileHandler(price);
-                  setGridStateTo(selectedCell, null, true);
+                  setGridState(prev => {
+                    const newGrid = [...prev];
+                    newGrid[selectedCell[0]][selectedCell[1]].locked = false;
+                    return newGrid;
+                  });
                   closeMenu();
                 }}
               >Confirm</button>

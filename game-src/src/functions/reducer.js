@@ -1,4 +1,3 @@
-import { calculatePayment, calculateRunningCost } from "./utils";
 
 export default (state, { type, payload }) => {
   switch (type) {
@@ -42,8 +41,6 @@ export default (state, { type, payload }) => {
           demand: state.playerStats.demand + 10,
           money: state.playerStats.money - 1000,
         },
-        houseCount: state.houseCount - 1,
-        officeCount: state.officeCount + 1,
       };
     case "unlock-tile":
       return {
@@ -61,24 +58,16 @@ export default (state, { type, payload }) => {
         playerStats: {
           ...state.playerStats,
           money:
-            state.playerStats.money +
-            calculatePayment(
-              state.houseCount,
-              state.officeCount,
-              state.payModifier,
-              state.playerStats.output / state.playerStats.demand
-            ),
+            state.playerStats.money + payload,
         },
       };
     }
     case "pay-running-cost":
-      console.log(state.playerStats.plants, state.costModifier)
       return {
         ...state,
         playerStats: {
           ...state.playerStats,
-          money: state.playerStats.money - 
-          calculateRunningCost(state.playerStats.plants, state.costModifier),
+          money: state.playerStats.money - payload,
         },
       };
     case "grow-population": {

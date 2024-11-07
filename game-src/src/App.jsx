@@ -33,11 +33,9 @@ function App() {
     availablePlants: [1], // stores ids of unlocked
     availableUpgrades: [1],
     runningCostInterval: 20,
-    payInterval: 30,
+    payInterval: 3,
     demandGrowInterval: 15,
     co2Limit: 100,
-    houseCount: 10,
-    officeCount: 0,
   };
 
   const [state, dispatch] = useReducer(reducer, initialWorld);
@@ -76,6 +74,9 @@ function App() {
   const [days, setDays] = useState(1);
   const [demandGrowthAmount, setDemandGrowthAmount] = useState(10);
 
+  const [paymentInfo, setPaymentInfo] = useState(null);
+  const [runningCostInfo, setRunningCostInfo] = useState(null);
+
   useEffect(() => {
     if (showProfitWindow || showRunningCostWindow || showPopulationChangeWindow) return;
     const intervalId = setInterval(() => {
@@ -92,7 +93,35 @@ function App() {
     if (days === 0 || state.playerStats.output === 0) return;
 
     if (days % state.payInterval === 0) {
-      dispatch({ type: "get-paid" });
+      const propertiesCntMap = {}
+      gridState.forEach(row => {
+        row.forEach(cell => {
+          if (typeof cell.value === "string" && cell.hasPower) {
+            propertiesCntMap[cell.value] = (propertiesCntMap[cell.value] || 0) + 1;
+          }
+        });
+      })
+      const calculatedPayment = calculatePayment(
+        [
+          [propertiesCntMap["house"] || 0, 100],
+          [propertiesCntMap["office"] || 0, 200],
+          [propertiesCntMap["shop"] || 0, 300],
+          [propertiesCntMap["bank"] || 0, 500],
+          [propertiesCntMap["factory"] || 0, 1000],
+        ],
+        state.payModifier,
+        state.playerStats.output / state.playerStats.demand
+      );
+      setPaymentInfo({
+        money: calculatedPayment || 0,
+        houseCount: propertiesCntMap["house"] || 0,
+        officeCount: propertiesCntMap["office"] || 0,
+        shopCount: propertiesCntMap["shop"] || 0,
+        bankCount: propertiesCntMap["bank"] || 0,
+        factoryCount: propertiesCntMap["factory"] || 0,
+        demandPercent: Math.floor(state.playerStats.output / state.playerStats.demand * 100)
+      })
+      dispatch({ type: "get-paid", payload: calculatedPayment });
       setShowProfitWindow(true);
     }
   }, [days, state.output, state.payInterval]);
@@ -100,13 +129,18 @@ function App() {
   useEffect(() => {
     if (days === 0 || state.playerStats.plants.length === 0) return;
 
-    if (state.playerStats.money < calculateRunningCost(state.playerStats.plants)) {
+    if (state.playerStats.money < calculateRunningCost(state.playerStats.plants, state.costModifier)) {
       dispatch({ type: "game-over" }); // TODO: implement this
       return;
     }
-
+    
+    const calculatedCost = calculateRunningCost(state.playerStats.plants, state.costModifier);
     if (days % state.runningCostInterval === 0) {
-      dispatch({ type: "pay-running-cost" });
+      setRunningCostInfo({
+        money: calculatedCost,
+        cnt: state.playerStats.plants.length
+      })
+      dispatch({ type: "pay-running-cost", payload: calculatedCost });
       setShowRunningCostWindow(true);
     }
   }, [days, state.playerStats.plants, state.runningCostInterval]);
@@ -143,22 +177,7 @@ function App() {
     }
   }, [state.co2Limit, state.playerStats.co2]);
 
-  const setGridStateTo = (pos, newValue, unlocking=false) => {
-    if (unlocking) {
-      setGridState(prev => {
-        const newGrid = [...prev];
-        newGrid[pos[0]][pos[1]].locked = false;
-        return newGrid;
-      });
-    } else {
-      setGridState(prev => {
-        const newGrid = [...prev];
-        newGrid[pos[0]][pos[1]].value = newValue;
-        return newGrid;
-      });
-    }
-  };
-  
+
   return (
     <>
       <Info playerStats={state.playerStats} co2Limit={state.co2Limit} days={days} />
@@ -176,23 +195,21 @@ function App() {
         gridState={gridState}
         buyPlantHandler={payload => dispatch({ type: "buy-plant", payload })}
         sellPlantHandler={payload => dispatch({ type: "sell-plant", payload })}
-        upgradeHouseHandler={() => dispatch({ type: "upgrade-house" })}
+        upgradeHouseHandler={addOneOrNone => dispatch({ type: "upgrade-house", payload: addOneOrNone })}
         unlockTileHandler={payload => dispatch({ type: "unlock-tile", payload})}
-        setGridStateTo={setGridStateTo}
+        setGridState={setGridState}
       />
       {showProfitWindow && (
         <PeriodicPopup
           title="Profit Summary"
           text={
-            `You reiceved $${calculatePayment(
-              state.houseCount,
-              state.officeCount,
-              state.payModifier,
-              state.playerStats.output / state.playerStats.demand
-            )}. \n` +
-            `Houses count: ${state.houseCount} \n` +
-            `Offices count: ${state.officeCount} \n` +
-            `Demand Fulfilled: ${Math.floor((state.playerStats.output / state.playerStats.demand) * 100)}% \n`
+            `You reiceved $${paymentInfo.money}. \n` +
+            `Houses count: ${paymentInfo.houseCount} \n` +
+            `Offices count: ${paymentInfo.officeCount} \n` +
+            `Shops count: ${paymentInfo.shopCount} \n` +
+            `Banks count: ${paymentInfo.bankCount} \n` +
+            `Factories count: ${paymentInfo.factoryCount} \n` +
+            `Demand Fulfilled: ${paymentInfo.demandPercent}% \n`
           }
           closeFunc={() => setShowProfitWindow(false)}
         />
@@ -200,10 +217,7 @@ function App() {
       {showRunningCostWindow && (
         <PeriodicPopup
           title="Running Cost Summary"
-          text={`You paid $${calculateRunningCost(
-            state.playerStats.plants,
-            state.costModifier
-          )} for maintenance and resources needed to power your facilities.`}
+          text={`You paid $${runningCostInfo.money} for maintenance and resources needed to power your ${runningCostInfo.cnt} facilities.`}
           closeFunc={() => setShowRunningCostWindow(false)}
         />
       )}
