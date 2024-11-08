@@ -1,6 +1,7 @@
 body {
   height: 100vh;
   overflow: hidden;
+  user-select: none;
 }
 
 #root {
@@ -8,9 +9,11 @@ body {
   background-color: #f4f4f4;
   margin: 1rem auto;
   border: 1px solid black;
+  border-radius: 15px;
   width: 1280px;
   height: 720px;
   position: relative;
+  box-shadow: 0 4px 8px rgb(0, 4, 255);
 }
 
 .grid-wrapper {
@@ -48,17 +51,55 @@ body {
   filter: contrast(15%) blur(1px);
 }
 
-.grid-cell:hover {
-  background-color: #0f0;
-}
 .grid-menu {
   position: absolute;
-  background: white;
+  background: lightgray;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgb(0, 0, 0);
+  border: 2px solid black;
   z-index: 1000;
   width: 200px;
+}
+.grid-menu button {
+  display: block;
+  margin: 10px auto;
+  padding: 5px;
+  width: 100px;
+  background: lightblue;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.grid-menu button:hover {
+  background: lightgreen;
+}
+
+.grid-buy-tabs .tab-wrapper {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+  position: absolute;
+  border: 2px solid black;
+  width: fit-content;
+  padding: 1rem;
+  border-radius: 15px;
+  background: lightgray;
+  box-shadow: 0 3px 2px rgb(122, 122, 122);
+  left: 50%;
+  top: 9%;
+}
+
+.grid-buy-tabs .tab {
+  cursor: pointer;
+  padding: 5px 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+  background: lightblue;
+}
+
+.grid-buy-tabs .tab.active, .grid-buy-tabs .tab:hover {
+  background: lightgreen;
 }
 
 .menu h3 {
@@ -76,19 +117,19 @@ body {
   width: 300px;
   border-right: 1px solid black;
   border-bottom: 1px solid black;
+  box-shadow: 0 3px 2px rgb(122, 122, 122);
+  border-radius: 15px;
   padding: .5rem;
 }
 .info-entry.money {
   position: absolute;
   right: 10px;
-  border: 1px solid black;
   width: 230px;
 }
 .info-entry.time {
   position: absolute;
   right: 10px;
   top: 50px;
-  border: 1px solid black;
   width: 230px;
 }
 .info-entry {
@@ -96,6 +137,9 @@ body {
   align-items: center;
   margin-bottom: 10px;
   position: relative;
+  border: 1px solid black;
+  border-radius: 15px;
+  box-shadow: 0 3px 2px rgb(122, 122, 122);
 }
 .info-entry span.unit {
   margin-left: 10px;
@@ -104,6 +148,7 @@ body {
   width: 34px;
   height: 34px;
   margin-right: 10px;
+  border-radius: 15px;
 }
 
 .progress-bar {
@@ -154,6 +199,7 @@ body {
 .upgrades {
   border-top: 1px solid black;
   border-right: 1px solid black;
+  border-radius: 15px;
   width: 100px;
   bottom: 0px;
   position: absolute;

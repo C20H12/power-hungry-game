@@ -31,8 +31,8 @@ export function calculateRunningCost(plants, modifier) {
 }
 
 export function setAdjacentCellsPower(pos, grid, bool) {
-  for (let i = -1; i <= 1; i++) {
-    for (let j = -1; j <= 1; j++) {
+  for (let i = -2; i <= 2; i++) {
+    for (let j = -2; j <= 2; j++) {
       if (grid[pos[0] + i] && grid[pos[0] + i][pos[1] + j]) {
         grid[pos[0] + i][pos[1] + j].hasPower = bool;
       }

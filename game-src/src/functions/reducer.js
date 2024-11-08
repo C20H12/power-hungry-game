@@ -1,5 +1,4 @@
-
-export default (state, { type, payload }) => {
+function getNewState(state, { type, payload }) {
   switch (type) {
     case "buy-upgrade":
       return {
@@ -33,15 +32,16 @@ export default (state, { type, payload }) => {
           co2: state.playerStats.co2 - payload.co2,
         },
       };
-    case "upgrade-house":
+    case "buy-prop":
       return {
         ...state,
         playerStats: {
           ...state.playerStats,
-          demand: state.playerStats.demand + 10,
-          money: state.playerStats.money - 1000,
+          money: state.playerStats.money - payload.cost,
+          demand: state.playerStats.demand + payload.demand,
         },
       };
+    
     case "unlock-tile":
       return {
         ...state,
@@ -71,7 +71,7 @@ export default (state, { type, payload }) => {
         },
       };
     case "grow-population": {
-      const demandAdd = payload < 0 ? 0 : payload;
+      const demandAdd = payload < 0 ? 0 : Math.floor(payload / 2);
       return {
         ...state,
         playerStats: {
@@ -81,6 +81,18 @@ export default (state, { type, payload }) => {
         },
       };
     }
+
+    // unlocks
+    case "unlock-plant":
+      return {
+        ...state,
+        availablePlants: state.availablePlants.concat(state.availablePlants.length + 1),
+      };
+    case "unlock-upgrade":
+      return {
+        ...state,
+        availableUpgrades: state.availableUpgrades.concat(state.availableUpgrades.length + 1),
+      };
 
     case "debug-unlock":
       return {
@@ -95,4 +107,14 @@ export default (state, { type, payload }) => {
     default:
       return state;
   }
+}
+
+export default (state, { type, payload }) => {
+  const newState = getNewState(state, { type, payload });
+  if (newState.playerStats.money < 0 || newState.playerStats.population < 0) {
+    newState.gameOver = true;
+    return state;
+  }
+  return newState;
 };
+

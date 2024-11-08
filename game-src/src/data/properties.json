@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "name": "house",
+    "payout": 400,
+    "cost": 500,
+    "image": "house.png",
+    "description": "A small residential house that produces a payout and uses power.",
+    "demand": 10
+  },
+  {
+    "id": 2,
+    "name": "office",
+    "payout": 600,
+    "cost": 1500,
+    "image": "office.png",
+    "description": "A medium-sized office building that produces a payout and uses power.",
+    "demand": 20
+  },
+  {
+    "id": 3,
+    "name": "shop",
+    "payout": 800,
+    "cost": 1000,
+    "image": "shop.png",
+    "description": "A local retail shop that produces a more payout and uses more power.",
+    "demand": 30
+  },
+  {
+    "id": 4,
+    "name": "bank",
+    "payout": 1000,
+    "cost": 2500,
+    "image": "bank.png",
+    "description": "A large bank building that produces a lot more payout and uses more power.",
+    "demand": 45
+  },
+  {
+    "id": 5,
+    "name": "factory",
+    "payout": 1500,
+    "cost": 2000,
+    "image": "factory.png",
+    "description": "A large manufacturing factory that produces substantial payout and uses a lot of power.",
+    "demand": 60
+  }
+]

@@ -8,6 +8,7 @@ import Grid from "./Components/Grid";
 import Upgrades from "./Components/Upgrades";
 
 import plants from "./data/plants.json";
+import properties from "./data/properties.json";
 import upgrades from "./data/upgrades.json";
 import allMaps from "./data/maps.json";
 
@@ -32,10 +33,11 @@ function App() {
     co2Modifier: 1,
     availablePlants: [1], // stores ids of unlocked
     availableUpgrades: [1],
-    runningCostInterval: 20,
+    runningCostInterval: 999,
     payInterval: 3,
-    demandGrowInterval: 15,
+    demandGrowInterval: 999,
     co2Limit: 100,
+    gameOver: false,
   };
 
   const [state, dispatch] = useReducer(reducer, initialWorld);
@@ -53,7 +55,7 @@ function App() {
               value: null,
               bg: pickedMap[index][i],
               locked: true,
-              hasPower: false
+              hasPower: false,
             };
           })
       );
@@ -77,6 +79,7 @@ function App() {
   const [paymentInfo, setPaymentInfo] = useState(null);
   const [runningCostInfo, setRunningCostInfo] = useState(null);
 
+  // progress days
   useEffect(() => {
     if (showProfitWindow || showRunningCostWindow || showPopulationChangeWindow) return;
     const intervalId = setInterval(() => {
@@ -87,87 +90,72 @@ function App() {
     };
   }, [showProfitWindow, showRunningCostWindow, showPopulationChangeWindow, DAY_INTERVAL]);
 
+  // === Periodic Events ===
+  // payment
   useEffect(() => {
     // only show when started producing power
     // and pause timer when the popup is being shown
     if (days === 0 || state.playerStats.output === 0) return;
 
     if (days % state.payInterval === 0) {
-      const propertiesCntMap = {}
+      const propertiesCntMap = {};
       gridState.forEach(row => {
         row.forEach(cell => {
           if (typeof cell.value === "string" && cell.hasPower) {
             propertiesCntMap[cell.value] = (propertiesCntMap[cell.value] || 0) + 1;
           }
         });
-      })
+      });
       const calculatedPayment = calculatePayment(
-        [
-          [propertiesCntMap["house"] || 0, 100],
-          [propertiesCntMap["office"] || 0, 200],
-          [propertiesCntMap["shop"] || 0, 300],
-          [propertiesCntMap["bank"] || 0, 500],
-          [propertiesCntMap["factory"] || 0, 1000],
-        ],
+        properties.map(prop => [propertiesCntMap[prop.name] || 0, prop.payout]),
         state.payModifier,
         state.playerStats.output / state.playerStats.demand
       );
-      setPaymentInfo({
+      const payInfo = {
         money: calculatedPayment || 0,
-        houseCount: propertiesCntMap["house"] || 0,
-        officeCount: propertiesCntMap["office"] || 0,
-        shopCount: propertiesCntMap["shop"] || 0,
-        bankCount: propertiesCntMap["bank"] || 0,
-        factoryCount: propertiesCntMap["factory"] || 0,
-        demandPercent: Math.floor(state.playerStats.output / state.playerStats.demand * 100)
-      })
+        counts: {},
+        demandPercent: Math.floor((state.playerStats.output / state.playerStats.demand) * 100),
+      };
+      for (const prop of properties) {
+        payInfo.counts[prop.name] = propertiesCntMap[prop.name] || 0;
+      }
+      setPaymentInfo(payInfo);
       dispatch({ type: "get-paid", payload: calculatedPayment });
       setShowProfitWindow(true);
     }
   }, [days, state.output, state.payInterval]);
 
+  // running cost
   useEffect(() => {
     if (days === 0 || state.playerStats.plants.length === 0) return;
 
-    if (state.playerStats.money < calculateRunningCost(state.playerStats.plants, state.costModifier)) {
-      dispatch({ type: "game-over" }); // TODO: implement this
-      return;
-    }
-    
     const calculatedCost = calculateRunningCost(state.playerStats.plants, state.costModifier);
     if (days % state.runningCostInterval === 0) {
       setRunningCostInfo({
         money: calculatedCost,
-        cnt: state.playerStats.plants.length
-      })
+        cnt: state.playerStats.plants.length,
+      });
       dispatch({ type: "pay-running-cost", payload: calculatedCost });
       setShowRunningCostWindow(true);
     }
   }, [days, state.playerStats.plants, state.runningCostInterval]);
 
+  // grow population
   useEffect(() => {
-    if (
-      days === 0 ||
-      days % state.demandGrowInterval !== 0
-    )
-      return;
+    if (days === 0 || days % state.demandGrowInterval !== 0) return;
 
     // decreasing will run even if demand is not met
     if (demandGrowthAmount < 0) {
       dispatch({ type: "grow-population", payload: demandGrowthAmount });
       setShowPopulationChangeWindow(true);
-      if (state.playerStats.population < 0) {
-        dispatch({ type: "game-over" }); // TODO: implement this
-      }
       return;
     }
-      
+
     // only run when demand is met, to grow population
-    if (state.playerStats.output >= state.playerStats.demand) {
+    if (state.playerStats.output >= state.playerStats.demand * 0.75) {
       setShowPopulationChangeWindow(true);
       dispatch({ type: "grow-population", payload: demandGrowthAmount });
     }
-
   }, [days, state.demandGrowInterval]);
 
   // set the growth amount in the next grow event
@@ -177,6 +165,31 @@ function App() {
     }
   }, [state.co2Limit, state.playerStats.co2]);
 
+  // unlocks
+  useEffect(() => {
+    if (state.availablePlants.length < 20) {
+      // unlock every 40 population growth
+      if (state.playerStats.population % 40 === 0) {
+        dispatch({ type: "unlock-plant" });
+      }
+      // unlock upgrade every 50 population growth
+      if (state.playerStats.population % 60 === 0) {
+        dispatch({ type: "unlock-upgrade" });
+      }
+    }
+  }, [state.playerStats.population]);
+
+  if (state.gameOver) {
+    return (
+      <div className="game-over">
+        <h1>Game Over</h1>
+        <h3>Population: {state.playerStats.population}</h3>
+        <h3>Days: {days}</h3>
+        <h3>Money: ${state.playerStats.money}</h3>
+        <h3>CO2 Emissions: {state.playerStats.co2}</h3>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -191,12 +204,13 @@ function App() {
       <Grid
         allPlants={plants}
         availablePlants={state.availablePlants}
+        allProperties={properties}
         money={state.playerStats.money}
         gridState={gridState}
         buyPlantHandler={payload => dispatch({ type: "buy-plant", payload })}
         sellPlantHandler={payload => dispatch({ type: "sell-plant", payload })}
-        upgradeHouseHandler={addOneOrNone => dispatch({ type: "upgrade-house", payload: addOneOrNone })}
-        unlockTileHandler={payload => dispatch({ type: "unlock-tile", payload})}
+        buyPropertyHandler={payload => dispatch({ type: "buy-prop", payload })}
+        unlockTileHandler={payload => dispatch({ type: "unlock-tile", payload })}
         setGridState={setGridState}
       />
       {showProfitWindow && (
@@ -204,11 +218,11 @@ function App() {
           title="Profit Summary"
           text={
             `You reiceved $${paymentInfo.money}. \n` +
-            `Houses count: ${paymentInfo.houseCount} \n` +
-            `Offices count: ${paymentInfo.officeCount} \n` +
-            `Shops count: ${paymentInfo.shopCount} \n` +
-            `Banks count: ${paymentInfo.bankCount} \n` +
-            `Factories count: ${paymentInfo.factoryCount} \n` +
+            `Property Counts: \n` +
+            properties
+              .map(prop => `${prop.name}: ${paymentInfo.counts[prop.name] || 0}`)
+              .join("\n") +
+            `\n\n` +
             `Demand Fulfilled: ${paymentInfo.demandPercent}% \n`
           }
           closeFunc={() => setShowProfitWindow(false)}
@@ -247,15 +261,9 @@ function App() {
       >
         music2
       </button>
-      <button onClick={() => setDAY_INTERVAL(0.5)}>
-        fast
-      </button>
-      <button onClick={() => setDAY_INTERVAL(2)}>
-        slow
-      </button>
-      <button onClick={() => setDAY_INTERVAL(1000)}>
-        stop
-      </button>
+      <button onClick={() => setDAY_INTERVAL(0.5)}>fast</button>
+      <button onClick={() => setDAY_INTERVAL(2)}>slow</button>
+      <button onClick={() => setDAY_INTERVAL(1000)}>stop</button>
     </>
   );
 }
