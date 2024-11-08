@@ -72,6 +72,7 @@ function getNewState(state, { type, payload }) {
       };
     case "grow-population": {
       const demandAdd = payload < 0 ? 0 : Math.floor(payload / 2);
+      console.log(payload)
       return {
         ...state,
         playerStats: {
@@ -111,9 +112,14 @@ function getNewState(state, { type, payload }) {
 
 export default (state, { type, payload }) => {
   const newState = getNewState(state, { type, payload });
-  if (newState.playerStats.money < 0 || newState.playerStats.population < 0) {
-    newState.gameOver = true;
-    return state;
+  if (newState.playerStats.money <= 0 || newState.playerStats.population <= 0) {
+    return {
+      ...newState,
+      playerStats: {
+        ...newState.playerStats,
+      },
+      gameOver: true,
+    };
   }
   return newState;
 };

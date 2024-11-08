@@ -1,10 +1,22 @@
-[
-  "Hush… the smoke you burn shall devour the morning light. Can you see the shadows creeping in? They whisper of decay…",
-  "The air grows thick, my friend. Can you hear the city gasp? Each breath it takes is a step closer to ruin, a lullaby of soot and sorrow...",
-  "Growth, growth! But at what cost? A flower that feeds on poison blooms only for a day, then withers, forgotten and gray.",
-  "Gold in hand, ash in the air… will your coins shield you from the storm? Beware, beware! Riches won't mend a broken sky.",
-  "They flee, they flee… like leaves before the winter’s wind. A city once bright, now empty and dim. Do you hear their footsteps fading?",
-  "Ah, Director, do you listen to the hum beneath the ground? The Earth sighs, weary of bearing the weight of your choices…",
-  "The river runs murky; the skies turn gray. Can you see the signs, or are you lost in the fray?",
-  "Tick-tock, tick-tock… the city’s heart beats in time with your hand. Each pulse, a choice, each choice, a path—will you lead us to life, or to dust?"
-]
+{
+  "co2": [
+    "Hush… the smoke you burn shall devour the morning light. Can you see the shadows creeping in? They whisper of decay…",
+    "The air grows thick, my friend. Can you hear the city gasp? Each breath it takes is a step closer to ruin, a lullaby of soot and sorrow...",
+    "Growth, growth! But at what cost? A flower that feeds on poison blooms only for a day, then withers, forgotten and gray.",
+    "Gold in hand, ash in the air… will your coins shield you from the storm? Beware, beware! Riches won't mend a broken sky.",
+    "They flee, they flee… like leaves before the winter’s wind. A city once bright, now empty and dim. Do you hear their footsteps fading?",
+    "Ah, Director, do you listen to the hum beneath the ground? The Earth sighs, weary of bearing the weight of your choices…",
+    "The river runs murky; the skies turn gray. Can you see the signs, or are you lost in the fray?",
+    "Tick-tock, tick-tock… the city’s heart beats in time with your hand. Each pulse, a choice, each choice, a path—will you lead us to life, or to dust?"
+  ],
+  "pay": [
+    "The city thrives, Director! Each coin a seed, each seed a promise of growth. Can you hear the people cheer?",
+    "Gold in hand, hope in heart! The city rises, a beacon of light in the dark. Your work is a gift, Director, a promise of better days.",
+    "The city hums with life, Director! Each coin a note, each note a song of progress. Can you hear the melody?",
+    "Ah, the city sings, Director! Each coin a verse, each verse a tale of prosperity. Can you hear the chorus?",
+    "The city blooms, Director! Each coin a petal, each petal a promise of beauty. Can you see the colors unfurl?",
+    "The city prospers, Director! Each coin a brick, each brick a wall against the storm. Can you feel the strength?",
+    "The city thrives, Director! Each coin a spark, each spark a flame of hope. Can you see the light?",
+    "The city grows, Director! Each coin a drop, each drop a river of change. Can you hear the tide?"
+  ]
+}

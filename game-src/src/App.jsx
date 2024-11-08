@@ -11,10 +11,11 @@ import plants from "./data/plants.json";
 import properties from "./data/properties.json";
 import upgrades from "./data/upgrades.json";
 import allMaps from "./data/maps.json";
+import messages from "./data/message.json";
 
 import reducer from "./functions/reducer";
 import PeriodicPopup from "./Components/PeriodicPopup";
-import { calculatePayment, calculateRunningCost, randint } from "./functions/utils";
+import { calculatePayment, calculateRunningCost, chanceToBoolean, randint } from "./functions/utils";
 
 function App() {
   const initialWorld = {
@@ -34,8 +35,8 @@ function App() {
     availablePlants: [1], // stores ids of unlocked
     availableUpgrades: [1],
     runningCostInterval: 999,
-    payInterval: 3,
-    demandGrowInterval: 999,
+    payInterval: 3222,
+    demandGrowInterval: 2,
     co2Limit: 100,
     gameOver: false,
   };
@@ -76,19 +77,19 @@ function App() {
   const [days, setDays] = useState(1);
   const [demandGrowthAmount, setDemandGrowthAmount] = useState(10);
 
-  const [paymentInfo, setPaymentInfo] = useState(null);
-  const [runningCostInfo, setRunningCostInfo] = useState(null);
+  const [paymentInfo, setPaymentInfo] = useState({ money: 0, counts: {}, demandPercent: 0 });
+  const [runningCostInfo, setRunningCostInfo] = useState({ money: 0, cnt: 0 });
 
   // progress days
   useEffect(() => {
-    if (showProfitWindow || showRunningCostWindow || showPopulationChangeWindow) return;
+    if (showProfitWindow || showRunningCostWindow || showPopulationChangeWindow || state.gameOver) return;
     const intervalId = setInterval(() => {
       setDays(n => n + 1);
     }, 1000 * DAY_INTERVAL);
     return () => {
       clearInterval(intervalId);
     };
-  }, [showProfitWindow, showRunningCostWindow, showPopulationChangeWindow, DAY_INTERVAL]);
+  }, [showProfitWindow, showRunningCostWindow, showPopulationChangeWindow, DAY_INTERVAL, state.gameOver]);
 
   // === Periodic Events ===
   // payment
@@ -167,10 +168,18 @@ function App() {
 
   // unlocks
   useEffect(() => {
-    if (state.availablePlants.length < 20) {
+    if (state.availablePlants.length < plants.length) {
       // unlock every 40 population growth
       if (state.playerStats.population % 40 === 0) {
-        dispatch({ type: "unlock-plant" });
+        // id 17 18 should not be unlocked until advanced upgrade
+        if (state.availablePlants.length < 17) {
+          dispatch({ type: "unlock-plant" });
+        } else {
+          // if advanced upgrade is unlocked, unlock the last 2 plants
+          if (state.playerStats.upgrades.map(up => up.name).includes("Advanced")) {
+            dispatch({ type: "unlock-plant" });
+          }
+        }
       }
       // unlock upgrade every 50 population growth
       if (state.playerStats.population % 60 === 0) {
@@ -183,10 +192,8 @@ function App() {
     return (
       <div className="game-over">
         <h1>Game Over</h1>
-        <h3>Population: {state.playerStats.population}</h3>
         <h3>Days: {days}</h3>
         <h3>Money: ${state.playerStats.money}</h3>
-        <h3>CO2 Emissions: {state.playerStats.co2}</h3>
       </div>
     );
   }
@@ -219,12 +226,14 @@ function App() {
           text={
             `You reiceved $${paymentInfo.money}. \n` +
             `Property Counts: \n` +
-            properties
-              .map(prop => `${prop.name}: ${paymentInfo.counts[prop.name] || 0}`)
-              .join("\n") +
+            properties.map(prop => `${prop.name}: ${paymentInfo.counts[prop.name] || 0}`).join("\n") +
             `\n\n` +
             `Demand Fulfilled: ${paymentInfo.demandPercent}% \n`
           }
+          dialogue={{
+            text: messages.pay[randint(0, messages.pay.length - 1)],
+            img: "/assets/crazy.png",
+          }}
           closeFunc={() => setShowProfitWindow(false)}
         />
       )}
@@ -235,17 +244,47 @@ function App() {
           closeFunc={() => setShowRunningCostWindow(false)}
         />
       )}
-      {showPopulationChangeWindow && (
-        <PeriodicPopup
-          title="Population Change"
-          text={
-            demandGrowthAmount > 0
-              ? `Because of your excellent power services, population has increased by 10 people!`
-              : `Due to high CO2 emissions, population has decreased by 10 people!`
-          }
-          closeFunc={() => setShowPopulationChangeWindow(false)}
-        />
-      )}
+      {showPopulationChangeWindow &&
+        // by chance, if co2 too much, ie demand grow < 0, show the disaster event popup
+        (demandGrowthAmount < 0 ? (
+          chanceToBoolean(50) && (state.playerStats.co2 - state.co2Limit) / state.co2Limit > 0.2 ? (
+            <PeriodicPopup
+              title="Natural Disaster"
+              text={
+                [
+                  "A wildfire has started in the city! Population has decreased by 30 people. To repair the damages, you paid $1000.",
+                  "The city has been hit by a flood! Population has decreased by 30 people. To repair the damages, you paid $1000.",
+                  "An tornado has struck the city! Population has decreased by 30 people. To repair the damages, you paid $1000.",
+                ][randint(0, 2)]
+              }
+              dialogue={{
+                text: messages.co2[randint(0, messages.co2.length - 1)],
+                img: "/assets/crazy.png",
+              }}
+              closeFunc={() => {
+                dispatch({ type: "grow-population", payload: -20 });
+                dispatch({ type: "pay-running-cost", payload: 1000 });
+                setShowPopulationChangeWindow(false);
+              }}
+            />
+          ) : (
+            <PeriodicPopup
+              title="Population decline"
+              text={`Due to high CO2 emissions, population has decreased by 10 people!`}
+              dialogue={{
+                text: messages.co2[randint(0, messages.co2.length - 1)],
+                img: "/assets/crazy.png",
+              }}
+              closeFunc={() => setShowPopulationChangeWindow(false)}
+            />
+          )
+        ) : (
+          <PeriodicPopup
+            title="Population Growth"
+            text="Because of your excellent power services, population has increased by 10 people!"
+            closeFunc={() => setShowPopulationChangeWindow(false)}
+          />
+        ))}
       <button onClick={() => dispatch({ type: "debug-unlock" })}>unlock</button>
       <button
         onClick={() => {

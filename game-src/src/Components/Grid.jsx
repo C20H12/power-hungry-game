@@ -107,11 +107,8 @@ function Grid({
                   ownedItemList={
                     // make the hydro plant only available on water, others not available
                     gridState[selectedCell[0]][selectedCell[1]].bg === "rive"
-                      ? Array(19)
-                          .fill(null)
-                          .map((_, i) => ({ id: i }))
-                          .filter(item => ![7, 8, 9].includes(item.id))
-                      : [{ id: 7 }, { id: 8 }, { id: 9 }]
+                      ? allPlants.filter(plant => !plant.name.includes("Hydro"))
+                      : allPlants.filter(plant => plant.name.includes("Hydro"))
                   }
                   money={money}
                   buyHandler={item => {
