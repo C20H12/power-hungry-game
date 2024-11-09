@@ -248,17 +248,7 @@ function App() {
         initialStep={0}
         onExit={() => {
           setShowTutorial([false, false, false]);
-
-          // wtf is this, band aid fix for the intro.js not working properly, the initial message
-          // shows 2 times for some reason
-          // which means this function exit got ran twice
-          // so if I want to pause time at start, I set it to a large value, that after 2 divisions gets 
-          // the desired value
-          // and I need to introduce an error for some reason to make the next button actually go to the next
-          // step instead of repeating the first step
-          setDAY_INTERVAL(di => di / 100);
-          (null).abc = 1
-          console.log(1)
+          setDAY_INTERVAL(1.5);
         }}
       />
       <Steps

@@ -66,11 +66,8 @@ function Grid({
               }}
               style={col.value == null ? { backgroundImage: `url(/assets/tiles/${col.bg}.png)` } : {}}
             >
-              {col.value === "house" && (
-                <img src={`/assets/house${col.hasPower ? "_power" : ""}.png`} alt="House" />
-              )}
-              {col.value === "office" && (
-                <img src={`/assets/office${col.hasPower ? "_power" : ""}.png`} alt="Office" />
+              {allProperties.find(prop => prop.name === col.value) && (
+                <img src={`/assets/${col.value}${col.hasPower ? "_power" : ""}.png`} alt="Property" />
               )}
               {typeof col.value !== "string" && col.value != null && (
                 <img src={"/assets/" + col.value.image} alt="Plant" />
@@ -106,7 +103,9 @@ function Grid({
                   availableItemList={availablePlants}
                   ownedItemList={
                     // check the mapExclusion of the available plants, disable if selected tile is in it
-                    allPlants.filter(plant => plant.mapExclusion.includes(gridState[selectedCell[0]][selectedCell[1]].bg))
+                    allPlants.filter(plant =>
+                      plant.mapExclusion.includes(gridState[selectedCell[0]][selectedCell[1]].bg)
+                    )
                   }
                   money={money}
                   buyHandler={item => {
