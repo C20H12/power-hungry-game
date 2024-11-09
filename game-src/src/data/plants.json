@@ -7,7 +7,8 @@
     "runningCost": 50,
     "output": 10,
     "image": "Coal1.png",
-    "description": "Basic coal power plant with moderate CO2 emissions."
+    "description": "Basic coal power plant with moderate CO2 emissions.",
+    "mapExclusion": ["rive"]
   },
   {
     "id": 2,
@@ -17,7 +18,8 @@
     "runningCost": 80,
     "output": 20,
     "image": "Oil1.png",
-    "description": "Basic oil power plant with moderate CO2 emissions."
+    "description": "Basic oil power plant with moderate CO2 emissions.",
+    "mapExclusion": ["rive"]
   },
   {
     "id": 3,
@@ -28,7 +30,8 @@
     "output": 20,
     "image": "Hydro1.png",
     "description": "Basic hydroelectric power plant with low CO2 emissions.",
-    "tip": "(water tiles only)"
+    "tip": "(water tiles only)",
+    "mapExclusion": ["land", "hill"]
   },
   {
     "id": 4,
@@ -39,7 +42,20 @@
     "output": 25,
     "image": "Wind1.png",
     "description": "Basic wind power plant with very low CO2 emissions.",
-    "tip": "(usually placed on top of hills for optimal operation)"
+    "tip": "(usually placed on top of hills for optimal operation)",
+    "mapExclusion": ["rive"],
+    "mapBonus": [
+      {
+        "tile": "hill",
+        "toChange": "output",
+        "value": 10
+      },
+      {
+        "tile": "land",
+        "toChange": "output",
+        "value": -10
+      }
+    ]
   },
   {
     "id": 5,
@@ -50,7 +66,20 @@
     "output": 20,
     "image": "Solar1.png",
     "description": "Basic solar power plant with minimal CO2 emissions.",
-    "tip": "(usually placed on flat land for optimal operation)"
+    "tip": "(usually placed on flat land for optimal operation)",
+    "mapExclusion": ["rive"],
+    "mapBonus": [
+      {
+        "tile": "land",
+        "toChange": "output",
+        "value": 10
+      },
+      {
+        "tile": "hill",
+        "toChange": "output",
+        "value": -10
+      }
+    ]
   },
   {
     "id": 6,
@@ -59,8 +88,9 @@
     "co2": 3,
     "runningCost": 900,
     "output": 40,
-    "image": "Solar2.png",
-    "description": "Basic fusion power plant with minimal CO2 emissions."
+    "image": "Fusion.png",
+    "description": "Basic fusion power plant with minimal CO2 emissions.",
+    "mapExclusion": ["rive"]
   },
   {
     "id": 7,
@@ -70,7 +100,8 @@
     "runningCost": 100,
     "output": 35,
     "image": "Coal2.png",
-    "description": "Intermediate coal power plant with higher outputput and CO2 emissions."
+    "description": "Intermediate coal power plant with higher output and CO2 emissions.",
+    "mapExclusion": ["rive"]
   },
   {
     "id": 8,
@@ -80,7 +111,8 @@
     "runningCost": 140,
     "output": 55,
     "image": "Oil2.png",
-    "description": "Intermediate oil power plant with higher outputput and CO2 emissions."
+    "description": "Intermediate oil power plant with higher output and CO2 emissions.",
+    "mapExclusion": ["rive"]
   },
   {
     "id": 9,
@@ -90,8 +122,9 @@
     "runningCost": 200,
     "output": 50,
     "image": "Hydro2.png",
-    "description": "Intermediate hydroelectric power plant with higher outputput and low CO2 emissions.",
-    "tip": "(water tiles only)"
+    "description": "Intermediate hydroelectric power plant with higher output and low CO2 emissions.",
+    "tip": "(water tiles only)",
+    "mapExclusion": ["land", "hill"]
   },
   {
     "id": 10,
@@ -101,8 +134,21 @@
     "runningCost": 400,
     "output": 40,
     "image": "Wind2.png",
-    "description": "Intermediate wind power plant with higher outputput and very low CO2 emissions.",
-    "tip": "(usually placed on top of hills for optimal operation)"
+    "description": "Intermediate wind power plant with higher output and very low CO2 emissions.",
+    "tip": "(usually placed on top of hills for optimal operation)",
+    "mapExclusion": ["rive"],
+    "mapBonus": [
+      {
+        "tile": "hill",
+        "toChange": "output",
+        "value": 10
+      },
+      {
+        "tile": "land",
+        "toChange": "output",
+        "value": -10
+      }
+    ]
   },
   {
     "id": 11,
@@ -112,8 +158,21 @@
     "runningCost": 750,
     "output": 30,
     "image": "Solar2.png",
-    "description": "Intermediate solar power plant with higher outputput and minimal CO2 emissions.",
-    "tip": "(usually placed on flat land for optimal operation)"
+    "description": "Intermediate solar power plant with higher output and minimal CO2 emissions.",
+    "tip": "(usually placed on flat land for optimal operation)",
+    "mapExclusion": ["rive"],
+    "mapBonus": [
+      {
+        "tile": "land",
+        "toChange": "output",
+        "value": 10
+      },
+      {
+        "tile": "hill",
+        "toChange": "output",
+        "value": -10
+      }
+    ]
   },
   {
     "id": 12,
@@ -122,8 +181,9 @@
     "co2": 3,
     "runningCost": 900,
     "output": 40,
-    "image": "Solar2.png",
-    "description": "Intermediate fusion power plant with higher outputput and minimal CO2 emissions."
+    "image": "Fusion.png",
+    "description": "Intermediate fusion power plant with higher output and minimal CO2 emissions.",
+    "mapExclusion": ["rive"]
   },
   {
     "id": 13,
@@ -133,7 +193,8 @@
     "runningCost": 150,
     "output": 45,
     "image": "Coal2.png",
-    "description": "Advanced coal power plant with high outputput and CO2 emissions."
+    "description": "Advanced coal power plant with high output and CO2 emissions.",
+    "mapExclusion": ["rive"]
   },
   {
     "id": 14,
@@ -143,7 +204,8 @@
     "runningCost": 200,
     "output": 75,
     "image": "Oil2.png",
-    "description": "Advanced oil power plant with high outputput and CO2 emissions."
+    "description": "Advanced oil power plant with high output and CO2 emissions.",
+    "mapExclusion": ["rive"]
   },
   {
     "id": 15,
@@ -153,8 +215,9 @@
     "runningCost": 350,
     "output": 70,
     "image": "Hydro2.png",
-    "description": "Advanced hydroelectric power plant with high outputput and low CO2 emissions.",
-    "tip": "(water tiles only)"
+    "description": "Advanced hydroelectric power plant with high output and low CO2 emissions.",
+    "tip": "(water tiles only)",
+    "mapExclusion": ["land", "hill"]
   },
   {
     "id": 16,
@@ -164,8 +227,21 @@
     "runningCost": 550,
     "output": 80,
     "image": "Wind2.png",
-    "description": "Advanced wind power plant with high outputput and very low CO2 emissions.",
-    "tip": "(usually placed on top of hills for optimal operation)"
+    "description": "Advanced wind power plant with high output and very low CO2 emissions.",
+    "tip": "(usually placed on top of hills for optimal operation)",
+    "mapExclusion": ["rive"],
+    "mapBonus": [
+      {
+        "tile": "hill",
+        "toChange": "output",
+        "value": 10
+      },
+      {
+        "tile": "land",
+        "toChange": "output",
+        "value": -10
+      }
+    ]
   },
   {
     "id": 17,
@@ -175,8 +251,21 @@
     "runningCost": 900,
     "output": 40,
     "image": "Solar2.png",
-    "description": "Advanced solar power plant with high outputput and minimal CO2 emissions.",
-    "tip": "(usually placed on flat land for optimal operation)"
+    "description": "Advanced solar power plant with high output and minimal CO2 emissions.",
+    "tip": "(usually placed on flat land for optimal operation)",
+    "mapExclusion": ["rive"],
+    "mapBonus": [
+      {
+        "tile": "land",
+        "toChange": "output",
+        "value": 10
+      },
+      {
+        "tile": "hill",
+        "toChange": "output",
+        "value": -10
+      }
+    ]
   },
   {
     "id": 18,
@@ -185,8 +274,9 @@
     "co2": 3,
     "runningCost": 900,
     "output": 40,
-    "image": "Solar2.png",
-    "description": "Basic fission power plant with minimal CO2 emissions."
+    "image": "Fission.png",
+    "description": "Basic fission power plant with minimal CO2 emissions.",
+    "mapExclusion": ["rive"]
   },
   {
     "id": 19,
@@ -195,7 +285,8 @@
     "co2": 3,
     "runningCost": 900,
     "output": 40,
-    "image": "Solar2.png",
-    "description": "Intermediate fission power plant with higher outputput and minimal CO2 emissions."
+    "image": "Fission.png",
+    "description": "Intermediate fission power plant with higher output and minimal CO2 emissions.",
+    "mapExclusion": ["rive"]
   }
 ]

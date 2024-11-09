@@ -1,0 +1,14 @@
+body > div.introjs-tooltipReferenceLayer > div > div.introjs-tooltiptext > div {
+  border: 1px solid black;
+  border-radius: 15px;
+  margin: 10px;
+  display: flex;
+}
+body > div.introjs-tooltipReferenceLayer > div > div.introjs-tooltiptext img {
+  border-radius: 15px;
+}
+body > div.introjs-tooltipReferenceLayer > div > div.introjs-tooltiptext span {
+  display: block;
+  padding: 10px;
+  font-weight: bold;
+}

@@ -33,7 +33,10 @@ function Upgrades({ allUpgrades, availableUpgrades, playerUpgrades, money, buyUp
           availableItemList={availableUpgrades}
           ownedItemList={playerUpgrades}
           money={money}
-          buyHandler={buyUpgradeHandler}
+          buyHandler={item => {
+            buyUpgradeHandler(item);
+            setShowUpgradesMenu(false);
+          }}
         />
       )}
     </div>

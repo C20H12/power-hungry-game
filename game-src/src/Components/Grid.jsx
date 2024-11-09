@@ -105,33 +105,26 @@ function Grid({
                   itemList={allPlants}
                   availableItemList={availablePlants}
                   ownedItemList={
-                    // make the hydro plant only available on water, others not available
-                    gridState[selectedCell[0]][selectedCell[1]].bg === "rive"
-                      ? allPlants.filter(plant => !plant.name.includes("Hydro"))
-                      : allPlants.filter(plant => plant.name.includes("Hydro"))
+                    // check the mapExclusion of the available plants, disable if selected tile is in it
+                    allPlants.filter(plant => plant.mapExclusion.includes(gridState[selectedCell[0]][selectedCell[1]].bg))
                   }
                   money={money}
                   buyHandler={item => {
                     let item1 = item;
-                    // bonus power for wind on hill tile
-                    if (item.name.includes("Wind")) {
-                      if (gridState[selectedCell[0]][selectedCell[1]].bg === "hill") {
-                        item1 = { ...item, output: item.output + 10 };
-                      } else {
-                        item1 = { ...item, output: item.output - 10 };
-                      }
-                    }
-                    // bonus power for solar on land
-                    if (item.name.includes("Solar")) {
-                      if (gridState[selectedCell[0]][selectedCell[1]].bg === "land") {
-                        item1 = { ...item, output: item.output + 15 };
+                    // if has map bonus, apply the ones that matches the current selected cell
+                    if (item.mapBonus) {
+                      for (const mb of item.mapBonus) {
+                        const { tile, toChange, value } = mb;
+                        if (gridState[selectedCell[0]][selectedCell[1]].bg === tile) {
+                          item1 = { ...item, [toChange]: item[toChange] + value };
+                        }
                       }
                     }
                     buyPlantHandler(item1);
                     setGridState(prev => {
                       const newGrid = [...prev];
                       newGrid[selectedCell[0]][selectedCell[1]].value = item1;
-                      // set the cell and 8 cells around it to powered
+                      // set the cell and 2 rings of cells around it to powered
                       setAdjacentCellsPower(selectedCell, newGrid, true);
                       return newGrid;
                     });

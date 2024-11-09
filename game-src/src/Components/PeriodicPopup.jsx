@@ -8,7 +8,10 @@ function PeriodicPopup({ title, text, closeFunc, dialogue = null }) {
         {dialogue && (
           <div>
             <img src={dialogue.img} alt="person" />
-            <p>{dialogue.text}</p>
+            <div>
+              <h3>{dialogue.title}</h3>
+              <p>{dialogue.text}</p>
+            </div>
           </div>
         )}
         <button onClick={closeFunc}>Confirm</button>

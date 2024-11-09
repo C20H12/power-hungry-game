@@ -1,7 +1,10 @@
 import { useReducer, useState, useEffect } from "react";
+import { Steps } from "intro.js-react";
 
 import "./Styles/App.css";
 import "./Styles/panels.css";
+import "./Styles/mainScreen.css";
+import "intro.js/introjs.css";
 
 import Info from "./Components/Info";
 import Grid from "./Components/Grid";
@@ -12,6 +15,7 @@ import properties from "./data/properties.json";
 import upgrades from "./data/upgrades.json";
 import allMaps from "./data/maps.json";
 import messages from "./data/message.json";
+import guide from "./data/guide.json";
 
 import reducer from "./functions/reducer";
 import PeriodicPopup from "./Components/PeriodicPopup";
@@ -31,12 +35,14 @@ function App() {
     costModifier: 1, // running cost multiplier
     payModifier: 1, // pay out
     outputModifier: 1,
+    payIntervalModifier: 1,
     co2Modifier: 1,
+    // ===
     availablePlants: [1], // stores ids of unlocked
     availableUpgrades: [1],
-    runningCostInterval: 999,
-    payInterval: 3222,
-    demandGrowInterval: 2,
+    runningCostInterval: 29,
+    payInterval: 19,
+    demandGrowInterval: 37,
     co2Limit: 100,
     gameOver: false,
   };
@@ -69,7 +75,7 @@ function App() {
     return grid;
   });
 
-  const [DAY_INTERVAL, setDAY_INTERVAL] = useState(999);
+  const [DAY_INTERVAL, setDAY_INTERVAL] = useState(1.5 * 10000);
 
   const [showProfitWindow, setShowProfitWindow] = useState(false);
   const [showRunningCostWindow, setShowRunningCostWindow] = useState(false);
@@ -80,16 +86,38 @@ function App() {
   const [paymentInfo, setPaymentInfo] = useState({ money: 0, counts: {}, demandPercent: 0 });
   const [runningCostInfo, setRunningCostInfo] = useState({ money: 0, cnt: 0 });
 
+  const [showTutorial, setShowTutorial] = useState([false, false, false]);
+  const [tutorialShowed, setTutorialShowed] = useState([true, false, false]);
+
+  useEffect(() => {
+    setShowTutorial([true, false, false]);
+  }, []);
+
   // progress days
   useEffect(() => {
-    if (showProfitWindow || showRunningCostWindow || showPopulationChangeWindow || state.gameOver) return;
+    if (
+      showProfitWindow ||
+      showRunningCostWindow ||
+      showPopulationChangeWindow ||
+      state.gameOver ||
+      showTutorial.includes(true) ||
+      DAY_INTERVAL > 100
+    )
+      return;
     const intervalId = setInterval(() => {
       setDays(n => n + 1);
     }, 1000 * DAY_INTERVAL);
     return () => {
       clearInterval(intervalId);
     };
-  }, [showProfitWindow, showRunningCostWindow, showPopulationChangeWindow, DAY_INTERVAL, state.gameOver]);
+  }, [
+    showProfitWindow,
+    showRunningCostWindow,
+    showPopulationChangeWindow,
+    DAY_INTERVAL,
+    state.gameOver,
+    showTutorial,
+  ]);
 
   // === Periodic Events ===
   // payment
@@ -98,7 +126,7 @@ function App() {
     // and pause timer when the popup is being shown
     if (days === 0 || state.playerStats.output === 0) return;
 
-    if (days % state.payInterval === 0) {
+    if (days % Math.floor(state.payInterval * state.payIntervalModifier) === 0) {
       const propertiesCntMap = {};
       gridState.forEach(row => {
         row.forEach(cell => {
@@ -110,12 +138,14 @@ function App() {
       const calculatedPayment = calculatePayment(
         properties.map(prop => [propertiesCntMap[prop.name] || 0, prop.payout]),
         state.payModifier,
-        state.playerStats.output / state.playerStats.demand
+        (state.playerStats.output * state.outputModifier) / state.playerStats.demand
       );
       const payInfo = {
         money: calculatedPayment || 0,
         counts: {},
-        demandPercent: Math.floor((state.playerStats.output / state.playerStats.demand) * 100),
+        demandPercent: Math.floor(
+          ((state.playerStats.output * state.outputModifier) / state.playerStats.demand) * 100
+        ),
       };
       for (const prop of properties) {
         payInfo.counts[prop.name] = propertiesCntMap[prop.name] || 0;
@@ -123,8 +153,14 @@ function App() {
       setPaymentInfo(payInfo);
       dispatch({ type: "get-paid", payload: calculatedPayment });
       setShowProfitWindow(true);
+
+      // show the second tutorial if not showeed
+      if (!tutorialShowed[1]) {
+        setShowTutorial([false, true, false]);
+        setTutorialShowed([true, true, false]);
+      }
     }
-  }, [days, state.output, state.payInterval]);
+  }, [days, state.output, state.payIntervalModifier]);
 
   // running cost
   useEffect(() => {
@@ -143,7 +179,7 @@ function App() {
 
   // grow population
   useEffect(() => {
-    if (days === 0 || days % state.demandGrowInterval !== 0) return;
+    if (days === 0 || days % state.demandGrowInterval !== 0 || paymentInfo.money === 0) return;
 
     // decreasing will run even if demand is not met
     if (demandGrowthAmount < 0) {
@@ -153,18 +189,24 @@ function App() {
     }
 
     // only run when demand is met, to grow population
-    if (state.playerStats.output >= state.playerStats.demand * 0.75) {
+    if (state.playerStats.output * state.outputModifier >= state.playerStats.demand * 0.75) {
       setShowPopulationChangeWindow(true);
       dispatch({ type: "grow-population", payload: demandGrowthAmount });
     }
-  }, [days, state.demandGrowInterval]);
+
+    // show the third tutorial if not showed
+    if (!tutorialShowed[2]) {
+      setShowTutorial([false, false, true]);
+      setTutorialShowed([true, true, true]);
+    }
+  }, [days, state.demandGrowInterval, paymentInfo]);
 
   // set the growth amount in the next grow event
   useEffect(() => {
-    if (state.playerStats.co2 >= state.co2Limit) {
+    if (state.playerStats.co2 * state.co2Modifier >= state.co2Limit) {
       setDemandGrowthAmount(-10);
     }
-  }, [state.co2Limit, state.playerStats.co2]);
+  }, [state.co2Limit, state.playerStats.co2, state.co2Modifier]);
 
   // unlocks
   useEffect(() => {
@@ -200,6 +242,42 @@ function App() {
 
   return (
     <>
+      <Steps
+        enabled={showTutorial[0]}
+        steps={guide.intro}
+        initialStep={0}
+        onExit={() => {
+          setShowTutorial([false, false, false]);
+
+          // wtf is this, band aid fix for the intro.js not working properly, the initial message
+          // shows 2 times for some reason
+          // which means this function exit got ran twice
+          // so if I want to pause time at start, I set it to a large value, that after 2 divisions gets 
+          // the desired value
+          // and I need to introduce an error for some reason to make the next button actually go to the next
+          // step instead of repeating the first step
+          setDAY_INTERVAL(di => di / 100);
+          (null).abc = 1
+          console.log(1)
+        }}
+      />
+      <Steps
+        enabled={showTutorial[1]}
+        steps={guide.pay}
+        initialStep={0}
+        onExit={() => {
+          setShowTutorial([false, false, false]);
+        }}
+      />
+      <Steps
+        enabled={showTutorial[2]}
+        steps={guide.grow}
+        initialStep={0}
+        onExit={() => {
+          setShowTutorial([false, false, false]);
+        }}
+      />
+
       <Info playerStats={state.playerStats} co2Limit={state.co2Limit} days={days} />
       <Upgrades
         allUpgrades={upgrades}
@@ -220,6 +298,16 @@ function App() {
         unlockTileHandler={payload => dispatch({ type: "unlock-tile", payload })}
         setGridState={setGridState}
       />
+      <div
+        id="clouds-img"
+        style={{
+          filter: `grayscale(${
+            state.playerStats.co2 / state.co2Limit > 1
+              ? 100
+              : Math.floor((state.playerStats.co2 / state.co2Limit) * 100)
+          }%)`,
+        }}
+      ></div>
       {showProfitWindow && (
         <PeriodicPopup
           title="Profit Summary"
@@ -231,6 +319,7 @@ function App() {
             `Demand Fulfilled: ${paymentInfo.demandPercent}% \n`
           }
           dialogue={{
+            title: "Crazy Steve",
             text: messages.pay[randint(0, messages.pay.length - 1)],
             img: "/assets/crazy.png",
           }}
@@ -258,6 +347,7 @@ function App() {
                 ][randint(0, 2)]
               }
               dialogue={{
+                title: "Crazy Steve",
                 text: messages.co2[randint(0, messages.co2.length - 1)],
                 img: "/assets/crazy.png",
               }}
@@ -272,6 +362,7 @@ function App() {
               title="Population decline"
               text={`Due to high CO2 emissions, population has decreased by 10 people!`}
               dialogue={{
+                title: "Crazy Steve",
                 text: messages.co2[randint(0, messages.co2.length - 1)],
                 img: "/assets/crazy.png",
               }}

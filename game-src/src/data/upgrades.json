@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "R&D Lv1.",
-    "description": "'Research and Development' into power sources",
+    "description": "'Research and Development' into power sources. Running cost are reduced by 5%.",
     "effect": {
       "toChange": "costModifier",
       "value": 0.95
@@ -13,7 +13,7 @@
   {
     "id": 2,
     "name": "Efficiency Lv1",
-    "description": "Evolve your tech, and make more money",
+    "description": "Evolve your tech, and make more money. Pay modifier increased by 1.5x.",
     "effect": {
       "toChange": "payModifier",
       "value": 1.5
@@ -24,7 +24,7 @@
   {
     "id": 3,
     "name": "Concience Lv1",
-    "description": "You develop a more ecologically friendly mindset, less CO2 will be emitted",
+    "description": "You develop a more ecologically friendly mindset, less CO2 will be emitted. CO2 emission reduced by 10%.",
     "effect": {
       "toChange": "co2Modifier",
       "value": 0.9
@@ -35,10 +35,10 @@
   {
     "id": 4,
     "name": "Faster Bank Lv1",
-    "description": "You're making bank, but do not receive it fast enough. You urge the bank!",
+    "description": "You're making bank, but do not receive it fast enough. You urge the bank! Pay interval reduced by 20%",
     "effect": {
-      "toChange": "payInterval",
-      "value": 48
+      "toChange": "payIntervalModifier",
+      "value": 0.8
     },
     "cost": 15000,
     "image": "Faster_Bank_Lv1.jpg"
@@ -46,7 +46,7 @@
   {
     "id": 5,
     "name": "R&D Lv2",
-    "description": "Putting more 'Research and Development' into power sources",
+    "description": "Putting more 'Research and Development' into power sources. Running cost are reduced by 10%.",
     "effect": {
       "toChange": "costModifier",
       "value": 0.9
@@ -57,7 +57,7 @@
   {
     "id": 6,
     "name": "Efficiency Lv2",
-    "description": "Advance your tech, and make more money",
+    "description": "Advance your tech, and make more money. Pay modifier increased by 2x.",
     "effect": {
       "toChange": "payModifier",
       "value": 2.0
@@ -68,7 +68,7 @@
   {
     "id": 7,
     "name": "Conscience Lv2",
-    "description": "Your mindset is every ecological, very demure. Less CO2 will be emitted",
+    "description": "Your mindset is every ecological, very demure. Less CO2 will be emitted. CO2 emission reduced by 25%.",
     "effect": {
       "toChange": "co2Modifier",
       "value": 0.75
@@ -79,10 +79,10 @@
   {
     "id": 8,
     "name": "Faster Bank Lv2",
-    "description": "Your money count is only getting higher, urge the bank some more.",
+    "description": "Your money count is only getting higher, urge the bank some more. Pay interval reduced by 40%.",
     "effect": {
-      "toChange": "payInterval",
-      "value": 36
+      "toChange": "payIntervalModifier",
+      "value": 0.6
     },
     "cost": 25000,
     "image": "Faster_Bank_Lv2.jpg"
@@ -90,7 +90,7 @@
   {
     "id": 9,
     "name": "R&D Lv3",
-    "description": "All the scientists are putting the most into 'R&D' into future power sources",
+    "description": "All the scientists are putting the most into 'R&D' into future power sources. Running cost are reduced by 20%.",
     "effect": {
       "toChange": "costModifier",
       "value": 0.8
@@ -101,8 +101,8 @@
   {
     "id": 10,
     "name": "Advanced Tech",
+    "description": "Society becomes very smart. Unlocks advanced power sources.",
     "effect": {},
-    "description": "Society becomes very smart",
     "cost": 50000,
     "image": "Advanced_Tech.jpg"
   }

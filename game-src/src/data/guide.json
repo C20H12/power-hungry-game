@@ -1,0 +1,40 @@
+{
+  "intro": [
+    {
+      "element": "#root > div.grid-wrapper",
+      "intro": "<div><img src=\"/assets/assistant.jpg\" /><span>Assistant Jayle</span></div>Welcome to the city of Dorondo! You have been elected as the director of urban resource planning. It's time to show your talents! Are you ready? The future of Dorondo is at your fingertips. I am your assistant Jayle, let’s get started with the basics of building a sustainable energy grid!"
+    },
+    {
+      "element": "#root > div.grid-wrapper > div:nth-child(1)",
+      "intro": "<div><img src=\"/assets/assistant.jpg\" /><span>Assistant Jayle</span></div>Click on an empty tile to place your first power plant. Remember, each plant affects your budget and the environment, so choose wisely!"
+    },
+    {
+      "element": "#root > div.info > div:nth-child(4)",
+      "intro": "<div><img src=\"/assets/assistant.jpg\" /><span>Assistant Jayle</span></div>Once you meet the initial power demand, you’ll receive income to invest in expanding your energy infrastructure. Keep up the momentum to support Dorondo’s growth!"
+    },
+    {
+      "element": "#root > div.upgrades > div > div > img",
+      "intro": "<div><img src=\"/assets/assistant.jpg\" /><span>Assistant Jayle</span></div>Explore the upgrades available to boost your energy efficiency, reduce emissions, or increase profits. Plan carefully as each choice impacts the future of Dorondo."
+    }
+  ],
+  "pay": [
+    {
+      "element": "#root > div.info > div.info-entry.money",
+      "intro": "<div><img src=\"/assets/assistant.jpg\" /><span>Assistant Jayle</span></div>Funds have been added to your balance. Use them to develop the city further, but don’t lose sight of your emissions."
+    }
+  ],
+  "grow": [
+    {
+      "element": "#root > div.info > div:nth-child(3)",
+      "intro": "<div><img src=\"/assets/assistant.jpg\" /><span>Assistant Jayle</span></div>Dorondo is growing! With a larger population comes greater energy needs. As your city grows, you can unlock new power plant options and upgrades to help you meet the demand."
+    },
+    {
+      "element": "#root > div.info > div:nth-child(5)",
+      "intro": "<div><img src=\"/assets/assistant.jpg\" /><span>Assistant Jayle</span></div>The demand loop is intensifying building more plants, earning more income, upgrading your facilities, and meeting the needs of a booming population. Keep an eye on emissions as you scale up."
+    },
+    {
+      "element": "#root > div.info > div:nth-child(5)",
+      "intro": "<div><img src=\"/assets/assistant.jpg\" /><span>Assistant Jayle</span></div>High emissions have led to a drop in population, affecting your earnings. Build parks, invest in cleaner energy, or upgrade to reduce CO₂ levels."
+    }
+  ]
+}
