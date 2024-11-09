@@ -1,6 +1,6 @@
 .buy-items {
   position: fixed;
-  top: 50%;
+  top: 420px;
   left: 50%;
   transform: translate(-50%, -50%);
   background: lightgray;
@@ -85,7 +85,7 @@
 
 .popup {
   position: fixed;
-  top: 50%;
+  top: 420px;
   left: 50%;
   transform: translate(-50%, -50%);
   background: white;
