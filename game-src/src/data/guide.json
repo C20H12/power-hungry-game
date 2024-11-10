@@ -6,7 +6,7 @@
     },
     {
       "element": "#root > div.grid-wrapper > div:nth-child(1)",
-      "intro": "<div><img src=\"/assets/assistant.jpg\" /><span>Assistant Jayle</span></div>Click on an empty tile to place your first power plant. Remember, each plant affects your budget and the environment, so choose wisely!"
+      "intro": "<div><img src=\"/assets/assistant.jpg\" /><span>Assistant Jayle</span></div>Click on an empty tile *close to a house* to place your first power plant. Remember, each plant affects your budget and the environment, so choose wisely!"
     },
     {
       "element": "#root > div.info > div:nth-child(4)",
@@ -21,6 +21,10 @@
     {
       "element": "#root > div.info > div.info-entry.money",
       "intro": "<div><img src=\"/assets/assistant.jpg\" /><span>Assistant Jayle</span></div>Funds have been added to your balance. Use them to develop the city further, but don’t lose sight of your emissions."
+    },
+    {
+      "element": "#root > div.grid-wrapper > div:nth-child(3)",
+      "intro": "<div><img src=\"/assets/assistant.jpg\" /><span>Assistant Jayle</span></div>You can now expand your city by unlocking new tiles. Don't forget to explore the available properties that you can build."
     }
   ],
   "grow": [

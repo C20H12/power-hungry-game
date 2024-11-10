@@ -1,5 +1,5 @@
 function Info(props) {
-  const { playerStats, co2Limit, days } = props;
+  const { playerStats, co2Limit, days, setDAY_INTERVAL } = props;
 
   return (
     <div className="info">
@@ -42,6 +42,13 @@ function Info(props) {
           <span className="unit">m³</span>
         </div>
         <div className="description">Current CO2 emissions.</div>
+      </div>
+
+      <div className="info-entry time-ctl">
+        <button onClick={() => setDAY_INTERVAL(2)}>Slow</button>
+        <button onClick={() => setDAY_INTERVAL(0.5)}>Fast</button>
+        <button onClick={() => setDAY_INTERVAL(9999)}>Stop</button>
+        <div className="description">Time controls.</div>
       </div>
     </div>
   );

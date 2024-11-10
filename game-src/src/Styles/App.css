@@ -145,6 +145,26 @@ body {
   top: 50px;
   width: 230px;
 }
+.info-entry.time-ctl {
+  position: absolute;
+  right: 10px;
+  top: 92px;
+  width: 230px;
+  padding: 5px 0;
+}
+.info-entry.time-ctl > .description {
+  left: 135px;
+}
+.info-entry.time-ctl > button {
+  background: lightblue;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 3px;
+}
+.info-entry.time-ctl > button:hover {
+  background: lightgreen;
+}
 .info-entry {
   display: flex;
   align-items: center;

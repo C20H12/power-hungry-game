@@ -16,6 +16,7 @@ import upgrades from "./data/upgrades.json";
 import allMaps from "./data/maps.json";
 import messages from "./data/message.json";
 import guide from "./data/guide.json";
+import music from "./data/sound.json";
 
 import reducer from "./functions/reducer";
 import PeriodicPopup from "./Components/PeriodicPopup";
@@ -89,6 +90,8 @@ function App() {
   const [showTutorial, setShowTutorial] = useState([false, false, false]);
   const [tutorialShowed, setTutorialShowed] = useState([true, false, false]);
 
+  let currentTrackIdx = 0;
+
   useEffect(() => {
     setShowTutorial([true, false, false]);
   }, []);
@@ -157,7 +160,7 @@ function App() {
       // show the second tutorial if not showeed
       if (!tutorialShowed[1]) {
         setShowTutorial([false, true, false]);
-        setTutorialShowed([true, true, false]);
+        setTutorialShowed(pre => [pre[0], true, pre[2]]);
       }
     }
   }, [days, state.output, state.payIntervalModifier]);
@@ -197,7 +200,7 @@ function App() {
     // show the third tutorial if not showed
     if (!tutorialShowed[2]) {
       setShowTutorial([false, false, true]);
-      setTutorialShowed([true, true, true]);
+      setTutorialShowed(pre => [pre[0], pre[1], true]);
     }
   }, [days, state.demandGrowInterval, paymentInfo]);
 
@@ -249,6 +252,14 @@ function App() {
         onExit={() => {
           setShowTutorial([false, false, false]);
           setDAY_INTERVAL(1.5);
+          // audio needs to be put here since the user need to interact with the page first
+          const audio = new Audio(music[currentTrackIdx]);
+          audio.onended = () => {
+            audio.src = music[++currentTrackIdx % music.length];
+            audio.play();
+          };
+          audio.volume = 0.1;
+          audio.play().catch((e) => console.log("didn't play sound", e));
         }}
       />
       <Steps
@@ -268,7 +279,11 @@ function App() {
         }}
       />
 
-      <Info playerStats={state.playerStats} co2Limit={state.co2Limit} days={days} />
+      <Info 
+        playerStats={state.playerStats} 
+        co2Limit={state.co2Limit} days={days} 
+        setDAY_INTERVAL={setDAY_INTERVAL}
+      />
       <Upgrades
         allUpgrades={upgrades}
         availableUpgrades={state.availableUpgrades}
@@ -367,23 +382,6 @@ function App() {
           />
         ))}
       <button onClick={() => dispatch({ type: "debug-unlock" })}>unlock</button>
-      <button
-        onClick={() => {
-          new Audio("/sound/HYP - Miracle.mp3").play();
-        }}
-      >
-        music
-      </button>
-      <button
-        onClick={() => {
-          new Audio("/sound/HYP - Criminal(Sound Effect Ver.).mp3").play();
-        }}
-      >
-        music2
-      </button>
-      <button onClick={() => setDAY_INTERVAL(0.5)}>fast</button>
-      <button onClick={() => setDAY_INTERVAL(2)}>slow</button>
-      <button onClick={() => setDAY_INTERVAL(1000)}>stop</button>
     </>
   );
 }

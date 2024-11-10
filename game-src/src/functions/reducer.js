@@ -72,7 +72,6 @@ function getNewState(state, { type, payload }) {
       };
     case "grow-population": {
       const demandAdd = payload < 0 ? 0 : Math.floor(payload / 2);
-      console.log(payload)
       return {
         ...state,
         playerStats: {
