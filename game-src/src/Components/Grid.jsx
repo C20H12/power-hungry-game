@@ -38,7 +38,7 @@ function Grid({
     setSelectedCell([i, j]);
 
     const rect = cellElement.getBoundingClientRect();
-    setMenuPosition({ top: rect.top, left: rect.left - 50 });
+    setMenuPosition({ top: rect.top, left: cellElement.offsetLeft + 425 });
   };
 
   const closeMenu = () => {
