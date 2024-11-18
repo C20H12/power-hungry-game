@@ -156,7 +156,7 @@ body {
   padding: 5px 0;
 }
 .info-entry.time-ctl > .description {
-  left: 135px;
+  left: -110px;
 }
 .info-entry.time-ctl > button {
   background: lightblue;
@@ -167,6 +167,10 @@ body {
 }
 .info-entry.time-ctl > button:hover {
   background: lightgreen;
+}
+div.info-entry.time-ctl > button.selected {
+  background: darkgreen;
+  color: white;
 }
 .info-entry {
   display: flex;

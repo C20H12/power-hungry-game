@@ -143,3 +143,19 @@
 .popup button:hover {
   background: lightgreen;
 }
+
+.popup.popup-side {
+  right: -10px;
+  left: unset;
+  width: 190px;
+  height: 400px;
+  overflow: scroll;
+  font-size: smaller;
+}
+.popup.popup-side::-webkit-scrollbar {
+  display: none;
+}
+.popup.popup-side>div img {
+  width: 50px;
+  height: 50px;
+}

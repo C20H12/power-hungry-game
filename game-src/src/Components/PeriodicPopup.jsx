@@ -1,8 +1,27 @@
-function PeriodicPopup({ title, text, closeFunc, dialogue = null }) {
+import { useState, useEffect } from 'react';
+
+function PeriodicPopup({ shouldShow, title, text, closeFunc, dialogue = null }) {
+  const [showCount, setShowCount] = useState(0);
+
+  useEffect(() => {
+    if (shouldShow) {
+      setShowCount(prevCount => prevCount + 1);
+    }
+  }, [shouldShow]);
+
+  useEffect(() => {
+    if (showCount > 3) {
+      const timer = setTimeout(closeFunc, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [showCount, closeFunc]);
+
+  if (!shouldShow) return null;
+
   return (
     <>
-      <div className="overlay" onClick={closeFunc}></div>
-      <div className="popup">
+      {showCount <= 3 && <div className="overlay" onClick={closeFunc}></div>}
+      <div className={"popup" + (showCount > 3 ? " popup-side" : "")}>
         <h2>{title}</h2>
         <p>{text}</p>
         {dialogue && (

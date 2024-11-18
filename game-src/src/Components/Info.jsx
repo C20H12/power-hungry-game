@@ -1,5 +1,13 @@
+import { useState } from 'react';
+
 function Info(props) {
   const { playerStats, co2Limit, days, setDAY_INTERVAL } = props;
+  const [selectedSpeed, setSelectedSpeed] = useState("normal");
+
+  const handleSpeedChange = (speed, interval) => {
+    setSelectedSpeed(speed);
+    setDAY_INTERVAL(interval);
+  };
 
   return (
     <div className="info">
@@ -45,9 +53,30 @@ function Info(props) {
       </div>
 
       <div className="info-entry time-ctl">
-        <button onClick={() => setDAY_INTERVAL(2)}>Slow</button>
-        <button onClick={() => setDAY_INTERVAL(0.5)}>Fast</button>
-        <button onClick={() => setDAY_INTERVAL(9999)}>Stop</button>
+        <button 
+          className={selectedSpeed === 'slow' ? 'selected' : ''} 
+          onClick={() => handleSpeedChange('slow', 2.5)}
+        >
+          Slow
+        </button>
+        <button 
+          className={selectedSpeed === 'normal' ? 'selected' : ''} 
+          onClick={() => handleSpeedChange('normal', 1.5)}
+        >
+          Normal
+        </button>
+        <button 
+          className={selectedSpeed === 'fast' ? 'selected' : ''} 
+          onClick={() => handleSpeedChange('fast', 0.5)}
+        >
+          Fast
+        </button>
+        <button 
+          className={selectedSpeed === 'stop' ? 'selected' : ''} 
+          onClick={() => handleSpeedChange('stop', 9999)}
+        >
+          Stop
+        </button>
         <div className="description">Time controls.</div>
       </div>
     </div>

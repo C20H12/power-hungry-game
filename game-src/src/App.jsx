@@ -259,7 +259,7 @@ function App() {
             audio.play();
           };
           audio.volume = 0.1;
-          audio.play().catch((e) => console.log("didn't play sound", e));
+          audio.play().catch(e => console.log("didn't play sound", e));
         }}
         options={{ hideNext: false }}
       />
@@ -282,9 +282,10 @@ function App() {
         options={{ hideNext: false }}
       />
 
-      <Info 
-        playerStats={state.playerStats} 
-        co2Limit={state.co2Limit} days={days} 
+      <Info
+        playerStats={state.playerStats}
+        co2Limit={state.co2Limit}
+        days={days}
         setDAY_INTERVAL={setDAY_INTERVAL}
       />
       <Upgrades
@@ -306,46 +307,39 @@ function App() {
         unlockTileHandler={payload => dispatch({ type: "unlock-tile", payload })}
         setGridState={setGridState}
       />
-      <div
-        id="clouds-img"
-        style={{
-          filter: `grayscale(${
-            state.playerStats.co2 / state.co2Limit > 1
-              ? 100
-              : Math.floor((state.playerStats.co2 / state.co2Limit) * 100)
-          }%)`,
+  
+      <PeriodicPopup
+        shouldShow={showProfitWindow}
+        title="Profit Summary"
+        text={
+          `You reiceved $${paymentInfo.money}. \n` +
+          `Property Counts: \n` +
+          properties.map(prop => `${prop.name}: ${paymentInfo.counts[prop.name] || 0}`).join("\n") +
+          `\n\n` +
+          `Demand Fulfilled: ${paymentInfo.demandPercent}% \n`
+        }
+        dialogue={{
+          title: "Crazy Steve",
+          text: messages.pay[randint(0, messages.pay.length - 1)],
+          img: "/assets/crazy.png",
         }}
-      ></div>
-      {showProfitWindow && (
-        <PeriodicPopup
-          title="Profit Summary"
-          text={
-            `You reiceved $${paymentInfo.money}. \n` +
-            `Property Counts: \n` +
-            properties.map(prop => `${prop.name}: ${paymentInfo.counts[prop.name] || 0}`).join("\n") +
-            `\n\n` +
-            `Demand Fulfilled: ${paymentInfo.demandPercent}% \n`
-          }
-          dialogue={{
-            title: "Crazy Steve",
-            text: messages.pay[randint(0, messages.pay.length - 1)],
-            img: "/assets/crazy.png",
-          }}
-          closeFunc={() => setShowProfitWindow(false)}
-        />
-      )}
-      {showRunningCostWindow && (
-        <PeriodicPopup
-          title="Running Cost Summary"
-          text={`You paid $${runningCostInfo.money} for maintenance and resources needed to power your ${runningCostInfo.cnt} facilities.`}
-          closeFunc={() => setShowRunningCostWindow(false)}
-        />
-      )}
-      {showPopulationChangeWindow &&
-        // by chance, if co2 too much, ie demand grow < 0, show the disaster event popup
-        (demandGrowthAmount < 0 ? (
-          chanceToBoolean(50) && (state.playerStats.co2 - state.co2Limit) / state.co2Limit > 0.2 ? (
+        closeFunc={() => setShowProfitWindow(false)}
+      />
+      <PeriodicPopup
+        shouldShow={showRunningCostWindow}
+        title="Running Cost Summary"
+        text={`You paid $${runningCostInfo.money} for maintenance and resources needed to power your ${runningCostInfo.cnt} facilities.`}
+        closeFunc={() => setShowRunningCostWindow(false)}
+      />
+      {(() => {
+        const shouldDisaster =
+          chanceToBoolean(50) && (state.playerStats.co2 - state.co2Limit) / state.co2Limit > 0.2;
+        const isDeclining = demandGrowthAmount < 0;
+
+        return (
+          <>
             <PeriodicPopup
+              shouldShow={showPopulationChangeWindow && isDeclining && shouldDisaster}
               title="Natural Disaster"
               text={
                 [
@@ -365,8 +359,8 @@ function App() {
                 setShowPopulationChangeWindow(false);
               }}
             />
-          ) : (
             <PeriodicPopup
+              shouldShow={showPopulationChangeWindow && isDeclining && !shouldDisaster}
               title="Population decline"
               text={`Due to high CO2 emissions, population has decreased by 10 people!`}
               dialogue={{
@@ -376,14 +370,15 @@ function App() {
               }}
               closeFunc={() => setShowPopulationChangeWindow(false)}
             />
-          )
-        ) : (
-          <PeriodicPopup
-            title="Population Growth"
-            text="Because of your excellent power services, population has increased by 10 people!"
-            closeFunc={() => setShowPopulationChangeWindow(false)}
-          />
-        ))}
+            <PeriodicPopup
+              shouldShow={showPopulationChangeWindow && !isDeclining}
+              title="Population Growth"
+              text="Because of your excellent power services, population has increased by 10 people!"
+              closeFunc={() => setShowPopulationChangeWindow(false)}
+            />
+          </>
+        );
+      })()}
       <button onClick={() => dispatch({ type: "debug-unlock" })}>unlock</button>
     </>
   );
