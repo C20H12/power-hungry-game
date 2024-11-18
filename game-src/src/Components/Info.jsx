@@ -28,7 +28,7 @@ function Info(props) {
           <div className="progress" style={{ width: `${playerStats.output / playerStats.demand * 100}%` }}>
             {`${playerStats.output}/${playerStats.demand}`}
           </div>
-          <span className="unit">Kw</span>
+          <span className="unit">Mw</span>
         </div>
         <div className="description">Current power output from your plants relative to the demand.</div>
       </div>

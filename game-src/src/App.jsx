@@ -261,6 +261,7 @@ function App() {
           audio.volume = 0.1;
           audio.play().catch((e) => console.log("didn't play sound", e));
         }}
+        options={{ hideNext: false }}
       />
       <Steps
         enabled={showTutorial[1]}
@@ -269,6 +270,7 @@ function App() {
         onExit={() => {
           setShowTutorial([false, false, false]);
         }}
+        options={{ hideNext: false }}
       />
       <Steps
         enabled={showTutorial[2]}
@@ -277,6 +279,7 @@ function App() {
         onExit={() => {
           setShowTutorial([false, false, false]);
         }}
+        options={{ hideNext: false }}
       />
 
       <Info 

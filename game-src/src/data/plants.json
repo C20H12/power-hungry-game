@@ -13,10 +13,10 @@
   {
     "id": 2,
     "name": "Level 1 Oil",
-    "cost": 2500,
+    "cost": 1200,
     "co2": 15,
     "runningCost": 80,
-    "output": 20,
+    "output": 15,
     "image": "Oil1.png",
     "description": "Basic oil power plant with moderate CO2 emissions.",
     "mapExclusion": ["rive"]
@@ -24,10 +24,10 @@
   {
     "id": 3,
     "name": "Level 2 Coal",
-    "cost": 5000,
+    "cost": 2000,
     "co2": 40,
     "runningCost": 100,
-    "output": 35,
+    "output": 25,
     "image": "Coal2.png",
     "description": "Intermediate coal power plant with higher output and CO2 emissions.",
     "mapExclusion": ["rive"]
@@ -35,10 +35,10 @@
   {
     "id": 4,
     "name": "Level 3 Coal",
-    "cost": 8000,
+    "cost": 3500,
     "co2": 80,
     "runningCost": 150,
-    "output": 45,
+    "output": 40,
     "image": "Coal2.png",
     "description": "Advanced coal power plant with high output and CO2 emissions.",
     "mapExclusion": ["rive"]
@@ -46,10 +46,10 @@
   {
     "id": 5,
     "name": "Level 2 Oil",
-    "cost": 7000,
+    "cost": 3000,
     "co2": 35,
     "runningCost": 140,
-    "output": 55,
+    "output": 35,
     "image": "Oil2.png",
     "description": "Intermediate oil power plant with higher output and CO2 emissions.",
     "mapExclusion": ["rive"]
@@ -57,10 +57,10 @@
   {
     "id": 6,
     "name": "Level 3 Oil",
-    "cost": 10000,
+    "cost": 5000,
     "co2": 70,
     "runningCost": 200,
-    "output": 75,
+    "output": 50,
     "image": "Oil2.png",
     "description": "Advanced oil power plant with high output and CO2 emissions.",
     "mapExclusion": ["rive"]
@@ -68,7 +68,7 @@
   {
     "id": 7,
     "name": "Level 1 Hydroelectric",
-    "cost": 15000,
+    "cost": 7000,
     "co2": 5,
     "runningCost": 100,
     "output": 20,
@@ -80,7 +80,7 @@
   {
     "id": 8,
     "name": "Level 1 Wind",
-    "cost": 20000,
+    "cost": 8000,
     "co2": 2,
     "runningCost": 200,
     "output": 25,
@@ -104,7 +104,7 @@
   {
     "id": 9,
     "name": "Level 2 Hydroelectric",
-    "cost": 25000,
+    "cost": 15000,
     "co2": 10,
     "runningCost": 200,
     "output": 50,
@@ -116,7 +116,7 @@
   {
     "id": 10,
     "name": "Level 1 Solar",
-    "cost": 25000,
+    "cost": 10000,
     "co2": 1,
     "runningCost": 450,
     "output": 20,
@@ -140,7 +140,7 @@
   {
     "id": 11,
     "name": "Level 2 Wind",
-    "cost": 35000,
+    "cost": 15000,
     "co2": 5,
     "runningCost": 400,
     "output": 40,
@@ -164,7 +164,7 @@
   {
     "id": 12,
     "name": "Level 3 Hydroelectric",
-    "cost": 40000,
+    "cost": 25000,
     "co2": 15,
     "runningCost": 350,
     "output": 70,
@@ -176,7 +176,7 @@
   {
     "id": 13,
     "name": "Level 2 Solar",
-    "cost": 40000,
+    "cost": 20000,
     "co2": 2,
     "runningCost": 750,
     "output": 30,
@@ -200,7 +200,7 @@
   {
     "id": 14,
     "name": "Level 3 Solar",
-    "cost": 45000,
+    "cost": 30000,
     "co2": 3,
     "runningCost": 900,
     "output": 40,
@@ -224,7 +224,7 @@
   {
     "id": 15,
     "name": "Level 3 Wind",
-    "cost": 50000,
+    "cost": 25000,
     "co2": 10,
     "runningCost": 550,
     "output": 50,
@@ -248,7 +248,7 @@
   {
     "id": 18,
     "name": "Level 1 Fission",
-    "cost": 45000,
+    "cost": 30000,
     "co2": 3,
     "runningCost": 900,
     "output": 80,
@@ -259,10 +259,10 @@
   {
     "id": 19,
     "name": "Level 2 Fission",
-    "cost": 45000,
+    "cost": 40000,
     "co2": 3,
     "runningCost": 900,
-    "output":100,
+    "output": 100,
     "image": "Fission.png",
     "description": "Intermediate fission power plant with higher output and minimal CO2 emissions.",
     "mapExclusion": ["rive"]
@@ -270,10 +270,10 @@
   {
     "id": 16,
     "name": "Level 1 Fusion",
-    "cost": 100000,
+    "cost": 60000,
     "co2": 3,
     "runningCost": 900,
-    "output": 200,
+    "output": 300,
     "image": "Fusion.png",
     "description": "Basic fusion power plant with minimal CO2 emissions.",
     "mapExclusion": ["rive"]
@@ -281,7 +281,7 @@
   {
     "id": 17,
     "name": "Level 2 Fusion",
-    "cost": 100000,
+    "cost": 70000,
     "co2": 3,
     "runningCost": 900,
     "output": 500,

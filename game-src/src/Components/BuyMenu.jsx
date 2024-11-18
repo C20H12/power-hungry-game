@@ -22,9 +22,9 @@ function BuyMenu({ title, closeFunc, itemList, availableItemList, ownedItemList,
               {availableItemList.includes(item.id) && (
                 <button disabled={!hasEnoughMoney || isAlreadyOwned} onClick={() => buyHandler(item)}>
                   {isAlreadyOwned
-                    ? "Unavailable"
+                    ? "Unavailable - need $" + item.cost 
                     : !hasEnoughMoney
-                    ? "Not enough money"
+                    ? "Not enough money - need $" + item.cost
                     : `Buy for $${item.cost}`}
                 </button>
               )}
