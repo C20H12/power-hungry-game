@@ -252,7 +252,7 @@
     "co2": 3,
     "runningCost": 900,
     "output": 80,
-    "image": "Fission.png",
+    "image": "Fission.jpg",
     "description": "Basic fission power plant with minimal CO2 emissions.",
     "mapExclusion": ["rive"]
   },
@@ -263,7 +263,7 @@
     "co2": 3,
     "runningCost": 900,
     "output": 100,
-    "image": "Fission.png",
+    "image": "Fission2.jpg",
     "description": "Intermediate fission power plant with higher output and minimal CO2 emissions.",
     "mapExclusion": ["rive"]
   },
@@ -274,7 +274,7 @@
     "co2": 3,
     "runningCost": 900,
     "output": 300,
-    "image": "Fusion.png",
+    "image": "Fusion.jpg",
     "description": "Basic fusion power plant with minimal CO2 emissions.",
     "mapExclusion": ["rive"]
   },
@@ -285,7 +285,7 @@
     "co2": 3,
     "runningCost": 900,
     "output": 500,
-    "image": "Fusion.png",
+    "image": "Fusion2.jpg",
     "description": "Intermediate fusion power plant with higher output and minimal CO2 emissions.",
     "mapExclusion": ["rive"]
   }
