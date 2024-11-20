@@ -111,7 +111,7 @@ function getNewState(state, { type, payload }) {
 
 export default (state, { type, payload }) => {
   const newState = getNewState(state, { type, payload });
-  if (newState.playerStats.population <= 0) {
+  if (newState.playerStats.population <= 0 || newState.playerStats.money <= -5000) {
     return {
       ...newState,
       playerStats: {

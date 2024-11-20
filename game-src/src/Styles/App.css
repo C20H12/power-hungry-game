@@ -263,3 +263,21 @@ div.info-entry.time-ctl > button.selected {
   height: 70px;
   cursor: pointer;
 }
+
+.game-over {
+  border: 1px solid black;
+  border-radius: 15px;
+  width: 600px;
+  height: fit-content;
+  padding: 10px;
+  margin: 10px;
+  position: absolute;
+  left: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.game-over img {
+  width: 500px;
+  height: 300px;
+}

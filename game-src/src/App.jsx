@@ -239,6 +239,7 @@ function App() {
         <h1>Game Over</h1>
         <h3>Days: {days}</h3>
         <h3>Money: ${state.playerStats.money}</h3>
+        <img src="/assets/end.jpg" alt="" />
       </div>
     );
   }
