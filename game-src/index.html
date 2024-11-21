@@ -3,11 +3,148 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style></style>
-  <title>Document</title>
+  <style>
+    .title {
+      font-size: 3rem;
+      font-weight: 900;
+      color: #333;
+      text-align: center;
+      width: 50%;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      display: grid;
+      text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+      color: rgb(172, 172, 172);
+    }
+    .title1 {
+      position: relative;
+      right: 20%;
+      padding: 0;
+      margin: 20px;
+    }
+    .title2 {
+      position: relative;
+      left: 20%;
+      padding: 0;
+      margin: 20px;
+    }
+    body {
+      background-image: url(/title_page.jpg);
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-size: cover;
+      overflow-x: hidden;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    .btn {
+      position: absolute;
+      padding: 10px 20px;
+      font-size: 2rem;
+      font-weight: 900;
+      background-color: lightgray;
+      border: 2px solid black;
+      color: #000000;
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 1rem 3rem;
+    }
+    .btn:hover {
+      background-color: lightgreen;
+    }
+
+    .start {
+      top: 10%;
+      left: 20%;
+    }
+    .start a {
+      text-decoration: none;
+      color: black;
+      width: 100%;
+      height: 100%;
+    }
+
+    .credits {
+      top: 30%;
+      left: 10%;
+    }
+
+    #creditsDialog {
+      padding: 1rem;
+      background-color: lightgray;
+      border: 2px solid black;
+      border-radius: 5px;
+    }
+    .section {
+      border-bottom: 1px solid black;
+    }
+    #creditsDialog button {
+      background-color: darkgray;
+      border: 2px solid black;
+      color: #000000;
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 1rem 3rem;
+      margin: 10px auto;
+      width: 100%;
+    }
+    #creditsDialog button:hover {
+      background-color: lightgreen;
+    }
+  </style>
+  <title>Welcome to Power Hungry Game</title>
 </head>
 <body>
-  <div></div>
-  <a href="/game.html">ee</a>
+  <div class="title">
+    <h1 class="title1">Power</h1>
+    <h1 class="title2">Hungry</h1>
+  </div>
+  <button class="btn start">
+    <a href="/game.html">Start</a>
+  </button>
+  <button class="btn credits" onclick="creditsDialog.showModal()">Credits</button>
+  <dialog id="creditsDialog">
+    <div class="section">
+      <h3>Programming/Development</h3>
+      <ul>
+        <li>Main developer: Marvin</li>
+        <li>Co-developer: Isaac</li>
+        <li>Co-developer: Eddy</li>
+      </ul>
+    </div>
+    <div class="section">
+      <h3>Music Design</h3>
+      <ul>
+        <li>Music Lead: Jamie</li>
+        <li>Music Co-Lead: Eddy</li>
+      </ul>
+    </div>
+    <div class="section">
+      <h3>Graphic Design</h3>
+      <ul>
+        <li>Main Designer: Jamie</li>
+        <li>Co-Designer: Eddy</li>
+        <li>Co-Designer:- Isaac</li>
+      </ul>
+    </div>
+    <div class="section">
+      <h3>Creative Designs</h3>
+      <ul>
+        <li>Creative Director: Jamie</li>
+        <li>Co-Director: Isaac</li>
+      </ul>
+    </div>
+    <div class="section">
+      <h3>Special Thanks</h3>
+      <ul>
+        <li>CSC 194 Class Instructor: Steve</li>
+        <li>CSC 194 TA, Bogdan, and Special Guests</li>
+        <li>All CSC 194 classmates who helped test out our game.</li>
+      </ul>
+    </div>
+    <button onclick="creditsDialog.close()">Close</button>
+  </dialog>
 </body>
 </html>
