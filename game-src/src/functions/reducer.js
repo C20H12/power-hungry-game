@@ -110,6 +110,13 @@ function getNewState(state, { type, payload }) {
 }
 
 export default (state, { type, payload }) => {
+  if (type === "continue") {
+    return {
+      ...state,
+      gameStatus: "on",
+    };
+  }
+
   const newState = getNewState(state, { type, payload });
   if (newState.playerStats.population <= 0 || newState.playerStats.money <= -5000) {
     return {
@@ -117,7 +124,16 @@ export default (state, { type, payload }) => {
       playerStats: {
         ...newState.playerStats,
       },
-      gameOver: true,
+      gameStatus: "lost",
+    };
+  }
+  if (newState.playerStats.population >= 800) {
+    return {
+      ...newState,
+      playerStats: {
+        ...newState.playerStats,
+      },
+      gameStatus: "won",
     };
   }
   return newState;

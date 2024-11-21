@@ -281,3 +281,11 @@ div.info-entry.time-ctl > button.selected {
   width: 500px;
   height: 300px;
 }
+.game-over button {
+  margin: 10px 0;
+  padding: 5px;
+  background: lightblue;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+}

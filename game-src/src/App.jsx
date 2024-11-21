@@ -45,7 +45,7 @@ function App() {
     payInterval: 19,
     demandGrowInterval: 37,
     co2Limit: 100,
-    gameOver: false,
+    gameStatus: "on", // on, won. lost
   };
 
   const [state, dispatch] = useReducer(reducer, initialWorld);
@@ -102,7 +102,7 @@ function App() {
       showProfitWindow ||
       showRunningCostWindow ||
       showPopulationChangeWindow ||
-      state.gameOver ||
+      state.gameStatus !== "on" ||
       showTutorial.includes(true) ||
       DAY_INTERVAL > 100
     )
@@ -118,7 +118,7 @@ function App() {
     showRunningCostWindow,
     showPopulationChangeWindow,
     DAY_INTERVAL,
-    state.gameOver,
+    state.gameStatus,
     showTutorial,
   ]);
 
@@ -233,13 +233,26 @@ function App() {
     }
   }, [state.playerStats.population]);
 
-  if (state.gameOver) {
+  if (state.gameStatus === "lost") {
     return (
       <div className="game-over">
-        <h1>Game Over</h1>
+        <h1>You Lost</h1>
         <h3>Days: {days}</h3>
         <h3>Money: ${state.playerStats.money}</h3>
-        <img src="/assets/end.jpg" alt="" />
+        <button onClick={() => window.location.reload()}>Restart</button>
+        <img src="/assets/game_lost.jpg" alt="" />
+      </div>
+    );
+  }
+  if (state.gameStatus === "won") {
+    return (
+      <div className="game-over">
+        <h1>Congratulations!</h1>
+        <h3>Days: {days}</h3>
+        <h3>Money: ${state.playerStats.money}</h3>
+        <button onClick={() => window.location.reload()}>Restart</button>
+        <button onClick={() => dispatch({ type: "continue" })}>Continue</button>
+        <img src="/assets/game_win.jpg" alt="" />
       </div>
     );
   }
