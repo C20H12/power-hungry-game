@@ -44,7 +44,7 @@ function App() {
     runningCostInterval: 29,
     payInterval: 19,
     demandGrowInterval: 37,
-    co2Limit: 100,
+    co2Limit: 120,
     gameStatus: "on", // on, won. lost
   };
 

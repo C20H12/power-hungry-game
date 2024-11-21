@@ -38,7 +38,7 @@
     },
     {
       "element": "#root > div.info > div:nth-child(5)",
-      "intro": "<div><img src=\"/assets/assistant.jpg\" /><span>Assistant Jayle</span></div>High emissions have led to a drop in population, affecting your earnings. Build parks, invest in cleaner energy, or upgrade to reduce CO₂ levels."
+      "intro": "<div><img src=\"/assets/assistant.jpg\" /><span>Assistant Jayle</span></div>High emissions could lead to a drop in population, affecting your earnings. Invest in cleaner energy to reduce CO₂ levels."
     }
   ]
 }
