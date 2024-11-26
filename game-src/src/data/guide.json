@@ -6,7 +6,11 @@
     },
     {
       "element": "#root > div.grid-wrapper > div:nth-child(1)",
-      "intro": "<div><img src=\"/assets/assistant.jpg\" /><span>Assistant Jayle</span></div>Click on an empty tile *close to a house* to place your first power plant. Remember, each plant affects your budget and the environment, so choose wisely!"
+      "intro": "<div><img src=\"/assets/assistant.jpg\" /><span>Assistant Jayle</span></div>Click on an empty tile *2 tiles away from a house* to place your first power plant. Remember, each plant affects your budget and the environment, so choose wisely!"
+    },
+    {
+      "element": "#root > div.info > div.info-entry.money",
+      "intro": "<div><img src=\"/assets/assistant.jpg\" /><span>Assistant Jayle</span></div>Here you can see your current balance. Make sure you have enough funds to build and maintain your energy infrastructure. Going too much into debt doesn’t bode well for the future of your city."
     },
     {
       "element": "#root > div.info > div:nth-child(4)",
