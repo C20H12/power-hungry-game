@@ -94,6 +94,11 @@ function App() {
 
   useEffect(() => {
     setShowTutorial([true, false, false]);
+    // cheats
+    window.giveMeAllThings = () => dispatch({ type: "debug-unlock" });
+    window.giveMeMoney = (amount = 1) => dispatch({ type: "get-paid", payload: amount });
+    window.giveMeSpeed = (spd) => setDAY_INTERVAL(spd);
+    window.giveMeTheEnd = (winOrLose) => dispatch({ type: "debug-endgame", payload: winOrLose });
   }, []);
 
   // progress days
@@ -396,7 +401,7 @@ function App() {
           </>
         );
       })()}
-      <button onClick={() => dispatch({ type: "debug-unlock" })}>unlock</button>
+      {/* <button onClick={() => dispatch({ type: "debug-unlock" })}>unlock</button> */}
     </>
   );
 }

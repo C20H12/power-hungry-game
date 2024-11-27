@@ -104,6 +104,14 @@ function getNewState(state, { type, payload }) {
           money: state.playerStats.money + 999999,
         },
       };
+    case "debug-endgame":
+      return {
+        ...state,
+        playerStats: {
+          ...state.playerStats,
+          population: 999 * (payload ? 1 : -1),
+        },
+      };
     default:
       return state;
   }

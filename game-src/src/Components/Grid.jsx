@@ -61,6 +61,8 @@ function Grid({
               key={"" + i + j}
               data-coord={`${i},${j}`}
               onClick={e => {
+                if (selectedCell != null || typeof gridState[i][j].value === "string") 
+                  return;
                 handleCellClick(i, j, e.target);
                 playClickSound();
               }}
