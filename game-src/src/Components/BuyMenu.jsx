@@ -20,9 +20,11 @@ function BuyMenu({ title, closeFunc, itemList, availableItemList, ownedItemList,
                 {item.tip && <span>{item.tip}</span>}
               </p>
               {availableItemList.includes(item.id) && (
-                <button disabled={!hasEnoughMoney || isAlreadyOwned} onClick={() => buyHandler(item)}>
+                <button disabled={!hasEnoughMoney || isAlreadyOwned} onClick={() => buyHandler(item)} className={isAlreadyOwned ?
+                  "buy-items-disabled" : !hasEnoughMoney ? "buy-items-notEnough" : ""
+                }>
                   {isAlreadyOwned
-                    ? "Unavailable - need $" + item.cost 
+                    ? "Unavailable" 
                     : !hasEnoughMoney
                     ? "Not enough money - need $" + item.cost
                     : `Buy for $${item.cost}`}

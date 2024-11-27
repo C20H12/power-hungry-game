@@ -206,8 +206,11 @@ function App() {
 
   // set the growth amount in the next grow event
   useEffect(() => {
-    if (state.playerStats.co2 * state.co2Modifier >= state.co2Limit) {
+    if (state.playerStats.co2 * state.co2Modifier > state.co2Limit) {
       setDemandGrowthAmount(-10);
+    }
+    else {
+      setDemandGrowthAmount(10);
     }
   }, [state.co2Limit, state.playerStats.co2, state.co2Modifier]);
 

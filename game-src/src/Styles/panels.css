@@ -15,6 +15,11 @@
 }
 .buy-items h2 {
   text-align: center;
+  width: 89%;
+  display: inline-block;
+  margin: 0%;
+  position: relative;
+  top: -20px;
 }
 .buy-items>div {
   display: grid;
@@ -24,14 +29,13 @@
   display: none;
 }
 .buy-items .close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  position: sticky;
   background: none;
   border: none;
-  font-size: 24px;
   cursor: pointer;
   border-radius: 15px;
+  top: 0;
+  right: 0;
 }
 
 .item {
@@ -70,6 +74,17 @@
 .item button:hover {
   background: lightgreen;
 }
+.item button.buy-items-disabled, .item button.buy-items-notEnough {
+  cursor: not-allowed;
+}
+.item button.buy-items-disabled:hover {
+  background: lightcoral;
+}
+.item button.buy-items-notEnough:hover {
+  background: lightgoldenrodyellow;
+}
+
+
 
 
 
